@@ -121,7 +121,7 @@ function Start()
 	ctx.canvas.width = stageWidth;
 	ctx.canvas.height = stageHeight;
 	ctx.fillStyle = '#FFFFFF';
-	ctx.font = '17px \'GOODGIRL\'';
+	ctx.font = '20px \'GOODGIRL\'';
 	ctx.textBaseline = 'top';
 
 	SetupDice();
@@ -278,6 +278,8 @@ function PlayerSelect(whichPlayer)
 	}
 	else
 	{
+		playerSelectScreen = false;
+		currentPlayer = 1;
 		gameActive = true;
 	}
 }
