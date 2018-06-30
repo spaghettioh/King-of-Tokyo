@@ -7,7 +7,7 @@ html, body
 body
 {
 	margin: 0px auto;
-	background: #000;
+	background: #000000;
 }
 
 @font-face
@@ -16,10 +16,10 @@ body
 	src: local('GOODGIRL'), url("assets/GOODGIRL.ttf");
 }
 
-#gameCanvas
+#game
 {
 	margin: 0px auto;
- 	border: 1px solid #444;
-	background: #DDD;
+ 	border: 1px solid #444444;
+	background: #AAAAAA;
 	display: block;
 }

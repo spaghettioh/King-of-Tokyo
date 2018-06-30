@@ -9,15 +9,15 @@ var dieSize = 50;
 // Count types of dice into an array for resolving dice
 // Global so cards can check
 // Sequence is... health, 1, 2, 3, attack, energy
-var diceRoll = [ [], [], [], [], [], [] ]
+var diceRoll = [ [], [], [], [], [], [] ];
 
 var currentRoll = 0;
 
-function setupDice() {
-  // generate 8 dice, 6 + 2
-  for(var i = 1; i <= 8; i++) {
-    dice[i] = new Dice()
-  }
+function SetupDice() {
+	// generate 8 dice, 6 + 2
+	for (var i = 1; i <= 8; i++) {
+		dice[i] = new Dice()
+	}
 }
 
 function Dice()
@@ -31,15 +31,15 @@ function Dice()
 	this.sides = [this.side0, this.side1, this.side2, this.side3, this.side4, this.side5]
 	this.currentSide = 0;
 	this.kept = false;
-	
-	this.draw = function(color, side, whereX, whereY)
+
+	this.Draw = function(color, side, whereX, whereY)
 	{
 		// default y pos for black dice
 		var ypos = 0;
-		if(color == "green") {ypos = dieSize;}
-		
+		if (color == "green") {ypos = dieSize;}
+
 		// draw the die!
-		if(this.kept == false)
+		if (this.kept == false)
 		{
 			ctx.drawImage(imgDice, dieSize * side, ypos, dieSize, dieSize, whereX, whereY, dieSize, dieSize);
 		}
@@ -51,36 +51,36 @@ function Dice()
 	};
 }
 
-function rollDice(tumble)
+function RollDice(tumble)
 {
 	// cycle through dice and pick a side
-	for(var d = 1; d <= players[currentPlayer].diceCount; d++)
+	for (var d = 1; d <= players[currentPlayer].diceCount; d++)
 	{
-		if(dice[d].kept == false)
+		if (dice[d].kept == false)
 		{
 			var randomSide = Math.floor(Math.random() * 6);
 			rolledDice[d - 1] = dice[d].sides[randomSide];
 			dice[d].currentSide = randomSide;
 		}
 	}
-	
+
 	tumble--;
-	
+
 	// keep tumbling
-	if(tumble > 1)
+	if (tumble > 1)
 	{
 		canRoll = false;
-		setTimeout(function(){rollDice(tumble)},500/tumble);
+		setTimeout(function(){RollDice(tumble)},500/tumble);
 	}
 	else
 	{
 		currentRoll++;
 		canRoll = true;
-		
+
 		// resolve on the last roll
-		if(currentRoll == players[currentPlayer].rollCount)
+		if (currentRoll == players[currentPlayer].rollCount)
 		{
-			resolveDice();
+			ResolveDice();
 			canRoll = false;
 		}
 	}
@@ -88,9 +88,9 @@ function rollDice(tumble)
 
 
 
-function keepDie(d)
+function KeepDie(d)
 {
-	if(currentRoll > 0 && d <= players[currentPlayer].diceCount)
+	if (currentRoll > 0 && d <= players[currentPlayer].diceCount)
 	{
 		// if it's not already kept, keep it
 		if (dice[d].kept == false)
@@ -107,10 +107,10 @@ function keepDie(d)
 
 
 
-function resolveDice()
+function ResolveDice()
 {
 	// cycle through each die and push a value to the relative diceRoll slot
-	for(var d in rolledDice)
+	for (var d in rolledDice)
 	{
 		switch(rolledDice[d])
 		{
@@ -122,23 +122,23 @@ function resolveDice()
 			case "energy": diceRoll[5].push("energy"); break;
 		}
 	}
-	
+
 	// Background dweller - reroll any 3
-	if(diceRoll[3].length > 0 && players[currentPlayer].cards.indexOf("Background Dweller") > -1)
+	if (diceRoll[3].length > 0 && players[currentPlayer].cards.indexOf("Background Dweller") > -1)
 	{
-		playKeep("Background Dweller");
+		PlayKeep("Background Dweller");
 	}
-	
+
 	var attackingTokyo = false;
-	
-	for(var faceType = 0; faceType < diceRoll.length; faceType++)
+
+	for (var faceType = 0; faceType < diceRoll.length; faceType++)
 	{
 		// add to stats
 		players[currentPlayer].resolvedDice[faceType] += diceRoll[faceType].length;
 		totalResolvedDice[faceType] += diceRoll[faceType].length;
-		
+
 		// only do stuff if a face type was actually rolled
-		if(diceRoll[faceType].length > 0)
+		if (diceRoll[faceType].length > 0)
 		{
 			// faceType is... health,1,2,3,attack,energy
 			switch(faceType)
@@ -146,12 +146,12 @@ function resolveDice()
 				// health
 				case 0:
 					// add 1 health for each die up to player max (to allow for cards) when not in Tokyo
-					if(players[currentPlayer].isInTokyo == false)
+					if (players[currentPlayer].isInTokyo == false)
 					{
 						players[currentPlayer].health += diceRoll[faceType].length;
 					}
 					break;
-				
+
 				// scoring
 				case 1:
 				case 2:
@@ -161,54 +161,42 @@ function resolveDice()
 					// 8 to accommodate for extra dice
 					switch(diceRoll[faceType].length)
 					{
-						case 3:
-							players[currentPlayer].score += (faceType);
-							break;
-						case 4:
-							players[currentPlayer].score += (faceType + 1);
-							break;
-						case 5:
-							players[currentPlayer].score += (faceType + 2);
-							break;
-						case 6:
-							players[currentPlayer].score += (faceType + 3);
-							break;
-						case 7:
-							players[currentPlayer].score += (faceType + 4);
-							break;
-						case 8:
-							players[currentPlayer].score += (faceType + 5);
-							break;
+						case 3: players[currentPlayer].score += (faceType); break;
+						case 4: players[currentPlayer].score += (faceType + 1); break;
+						case 5: players[currentPlayer].score += (faceType + 2); break;
+						case 6: players[currentPlayer].score += (faceType + 3); break;
+						case 7: players[currentPlayer].score += (faceType + 4); break;
+						case 8: players[currentPlayer].score += (faceType + 5); break;
 					}
-					
+
 					// player wins if score >= 20
-					if(players[currentPlayer].score >= 20)
+					if (players[currentPlayer].score >= 20)
 					{
 						gameOverMessage = "Player " + currentPlayer + " wins with a score of " + players[currentPlayer].score + "!";
 						gameOver = true;
 						return;
 					}
 					break;
-				
+
 				// attack
 				case 4:
 					// player occupies Tokyo if empty
-					if(tokyoOccupiedBy == 0)
+					if (tokyoOccupiedBy == 0)
 					{
-						notification("Player " + currentPlayer + " rolled an attack and entered Tokyo!");
+						Ticker("Player " + currentPlayer + " rolled an attack and entered Tokyo!");
 						tokyoOccupiedBy = currentPlayer;
 						players[currentPlayer].isInTokyo = true;
 						players[currentPlayer].score++;
 						break;
 					}
-					
+
 					// when in tokyo attack all players not this player
-					if(players[currentPlayer].isInTokyo == true)
+					if (players[currentPlayer].isInTokyo == true)
 					{
-						for(var e in players)
+						for (var e in players)
 						{
 							// avoid affecting dead players
-							if(currentPlayer != e && players[e].alive == true)
+							if (currentPlayer != e && players[e].alive == true)
 							{
 								players[e].health -= diceRoll[faceType].length;
 							}
@@ -217,17 +205,17 @@ function resolveDice()
 					// otherwise attack tokyo
 					else
 					{
-						for(var e = 1; e <= playerCount; e++)
+						for (var e = 1; e <= playerCount; e++)
 						{
-							if(currentPlayer != e && players[e].isInTokyo == true)
+							if (currentPlayer != e && players[e].isInTokyo == true)
 							{
 								attackingTokyo = true;
 							}
 						}
 					}
-					
+
 					break;
-				
+
 				// energy
 				case 5:
 					players[currentPlayer].energy += diceRoll[faceType].length;
@@ -235,27 +223,25 @@ function resolveDice()
 			}
 		}
 	}
-	
-	
+
+
 	// ===========================================
 	// add logic to protect players with defensive cards
-	
-	
 	// give Tokyo occupant chance to exit
-	if(attackingTokyo == true)
+	if (attackingTokyo == true)
 	{
-		attackTokyo();
+		AttackTokyo();
 	}
-	
+
 	// enact kept cards
-	if(players[currentPlayer].cards.length > 0)
+	if (players[currentPlayer].cards.length > 0)
 	{
-		for(var card in players[currentPlayer].cards)
+		for (var card in players[currentPlayer].cards)
 		{
-			playCardResolve(players[currentPlayer].cards[card]);
+			PlayCardResolve(players[currentPlayer].cards[card]);
 		}
 	}
-	
+
 	// set current roll to player max in case player Stays with roll
 	currentRoll = players[currentPlayer].rollCount;
 }
