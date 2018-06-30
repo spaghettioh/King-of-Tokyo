@@ -85,21 +85,21 @@ function preloadImages()
 	imgLoader.AddImage('assets/playerSelect.png', 'playerSelect');
 	imgLoader.AddImage('assets/gameBoard.png', 'gameBoard');
 	imgLoader.AddImage('assets/gameOver.png', 'gameOver');
-	imgLoader.onReadyCallback = Start;
+	imgLoader.OnReadyCallback = Start;
 	imgLoader.LoadImages();
 }
 
 function Start()
 {
-	imgCards = imgLoader.getImageByName('cards');
-	imgDice = imgLoader.getImageByName('dice');
-	imgDiceKeep = imgLoader.getImageByName('diceKeep');
-	imgMonsterHeads = imgLoader.getImageByName('monsterHeads');
-	imgMonstersFull = imgLoader.getImageByName('monstersFull');
-	imgCover = imgLoader.getImageByName('cover');
-	imgPlayerSelect = imgLoader.getImageByName('playerSelect');
-	imgGameBoard = imgLoader.getImageByName('gameBoard');
-	imgGameOver = imgLoader.getImageByName('gameOver');
+	imgCards = imgLoader.GetImageByName('cards');
+	imgDice = imgLoader.GetImageByName('dice');
+	imgDiceKeep = imgLoader.GetImageByName('diceKeep');
+	imgMonsterHeads = imgLoader.GetImageByName('monsterHeads');
+	imgMonstersFull = imgLoader.GetImageByName('monstersFull');
+	imgCover = imgLoader.GetImageByName('cover');
+	imgPlayerSelect = imgLoader.GetImageByName('playerSelect');
+	imgGameBoard = imgLoader.GetImageByName('gameBoard');
+	imgGameOver = imgLoader.GetImageByName('gameOver');
 
 	canvas = document.getElementById('game');
 	canvas.style.width = stageWidth;
