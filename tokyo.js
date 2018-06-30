@@ -9,7 +9,7 @@ King of Tokyo Copyright Richard Garfield and Iello Games
 var ctx;
 var stageWidth = 800;
 var stageHeight = 480;
-var canvasElement;
+var canvas;
 var imgLoader;
 
 // GAMEPLAY
@@ -20,7 +20,7 @@ var gameActive = false;
 var gameOver = false;
 var ticker = [];
 var tickerX = 800;
-var tickerStream = "";
+var tickerStream = '';
 var imgGameOver;
 
 // CARDS
@@ -76,43 +76,43 @@ window.onload = preloadImages;
 function preloadImages()
 {
 	imgLoader = new BulkImageLoader();
-	imgLoader.addImage("assets/cards.png", "cards");
-	imgLoader.addImage("assets/dice.png", "dice");
-	imgLoader.addImage("assets/diceKeep.png", "diceKeep");
-	imgLoader.addImage("assets/monsterHeads.png", "monsterHeads");
-	imgLoader.addImage("assets/monstersFull.png", "monstersFull");
-	imgLoader.addImage("assets/cover.png", "cover");
-	imgLoader.addImage("assets/playerSelect.png", "playerSelect");
-	imgLoader.addImage("assets/gameBoard.png", "gameBoard");
-	imgLoader.addImage("assets/gameOver.png", "gameOver");
+	imgLoader.AddImage('assets/cards.png', 'cards');
+	imgLoader.AddImage('assets/dice.png', 'dice');
+	imgLoader.AddImage('assets/diceKeep.png', 'diceKeep');
+	imgLoader.AddImage('assets/monsterHeads.png', 'monsterHeads');
+	imgLoader.AddImage('assets/monstersFull.png', 'monstersFull');
+	imgLoader.AddImage('assets/cover.png', 'cover');
+	imgLoader.AddImage('assets/playerSelect.png', 'playerSelect');
+	imgLoader.AddImage('assets/gameBoard.png', 'gameBoard');
+	imgLoader.AddImage('assets/gameOver.png', 'gameOver');
 	imgLoader.onReadyCallback = Start;
-	imgLoader.loadImages();
+	imgLoader.LoadImages();
 }
 
 function Start()
 {
-	imgCards = imgLoader.getImageByName("cards");
-	imgDice = imgLoader.getImageByName("dice");
-	imgDiceKeep = imgLoader.getImageByName("diceKeep");
-	imgMonsterHeads = imgLoader.getImageByName("monsterHeads");
-	imgMonstersFull = imgLoader.getImageByName("monstersFull");
-	imgCover = imgLoader.getImageByName("cover");
-	imgPlayerSelect = imgLoader.getImageByName("playerSelect");
-	imgGameBoard = imgLoader.getImageByName("gameBoard");
-	imgGameOver = imgLoader.getImageByName("gameOver");
+	imgCards = imgLoader.getImageByName('cards');
+	imgDice = imgLoader.getImageByName('dice');
+	imgDiceKeep = imgLoader.getImageByName('diceKeep');
+	imgMonsterHeads = imgLoader.getImageByName('monsterHeads');
+	imgMonstersFull = imgLoader.getImageByName('monstersFull');
+	imgCover = imgLoader.getImageByName('cover');
+	imgPlayerSelect = imgLoader.getImageByName('playerSelect');
+	imgGameBoard = imgLoader.getImageByName('gameBoard');
+	imgGameOver = imgLoader.getImageByName('gameOver');
 
-	canvasElement = document.getElementById("game");
-	canvasElement.style.width = stageWidth;
-	canvasElement.style.height = stageHeight;
-	canvasElement.addEventListener("click", mouseClicked, false);
-	canvasElement.addEventListener("mousemove", mouseMoved, false);
-	canvasElement.addEventListener("keydown",keyPressed,false);
+	canvas = document.getElementById('game');
+	canvas.style.width = stageWidth;
+	canvas.style.height = stageHeight;
+	canvas.addEventListener('click', MouseClicked, false);
+	canvas.addEventListener('mousemove', MouseMoved, false);
+	canvas.addEventListener('keydown',KeyPressed,false);
 
-	ctx = canvasElement.getContext("2d");
+	ctx = canvas.getContext('2d');
 	ctx.canvas.width = stageWidth;
 	ctx.canvas.height = stageHeight;
-	ctx.fillStyle = "#FFF";
-	ctx.font = "17px 'GOODGIRL'";
+	ctx.fillStyle = '#FFFFFF';
+	ctx.font = '17px \'GOODGIRL\'';
 	ctx.textBaseline = 'top';
 
 	SetupDice();
@@ -171,11 +171,11 @@ function Update() {
 
 			if (tableCardsPreview)
 			{
-				cardsOnTable[card].Draw("big", cardX, 480 - (cardSizeHeight / 2.2));
+				cardsOnTable[card].Draw('big', cardX, 480 - (cardSizeHeight / 2.2));
 			}
 			else
 			{
-				cardsOnTable[card].Draw("big", cardX, 440);
+				cardsOnTable[card].Draw('big', cardX, 440);
 			}
 		}
 
@@ -208,11 +208,11 @@ function Update() {
 				// use green dice for more than 6 otherwise use black dice
 				if (d > 6)
 				{
-					dice[d].Draw("green", dice[d].currentSide, xpos, 10);
+					dice[d].Draw('green', dice[d].currentSide, xpos, 10);
 				}
 				else
 				{
-					dice[d].Draw("black", dice[d].currentSide, xpos, 10);
+					dice[d].Draw('black', dice[d].currentSide, xpos, 10);
 				}
 
 				// move over depending on dice count (evenly spread)
@@ -243,7 +243,7 @@ function Update() {
 			{
 				var playerY = 100;
 
-				WriteStroke("Player " + p, playerX, playerY);
+				WriteStroke(`Player ${p}`, playerX, playerY);
 				WriteStroke(players[p].score, playerX, playerY += 20);
 				WriteStroke(players[p].health, playerX, playerY += 20);
 				WriteStroke(players[p].energy, playerX, playerY += 20);
@@ -252,7 +252,7 @@ function Update() {
 			}
 
 			// restart message
-			WriteStroke("Click anywhere to play again!", 20, stageHeight - 29);
+			WriteStroke(`Click anywhere to play again!`, 20, stageHeight - 29);
 		}
 	}
 }
@@ -265,7 +265,6 @@ function PlayerSelect(whichPlayer)
 		homeScreen = false;
 		playerSelectScreen = true;
 
-		WriteStroke("Player " + whichPlayer + ", select a character!",100, 30);
 		WriteStroke(`Player ${whichPlayer}, select a character!`,100, 30);
 	}
 	else
@@ -290,14 +289,14 @@ function Player(monsterSelected)
 	this.monster = monsterSelected;
 
 	// monster images based on selection
-	switch(this.monster)
+	switch (this.monster)
 	{
-		case "alien": this.monsterHead = 0; this.monsterFull = 0; break;
-		case "bunny": this.monsterHead = 100; this.monsterFull = 150; break;
-		case "zaur": this.monsterHead = 200; this.monsterFull = 300; break;
-		case "kraken": this.monsterHead = 300; this.monsterFull = 450; break;
-		case "dragon": this.monsterHead = 400; this.monsterFull = 600; break;
-		case "king": this.monsterHead = 500; this.monsterFull = 750; break;
+		case 'alien': this.monsterHead = 0; this.monsterFull = 0; break;
+		case 'bunny': this.monsterHead = 100; this.monsterFull = 150; break;
+		case 'zaur': this.monsterHead = 200; this.monsterFull = 300; break;
+		case 'kraken': this.monsterHead = 300; this.monsterFull = 450; break;
+		case 'dragon': this.monsterHead = 400; this.monsterFull = 600; break;
+		case 'king': this.monsterHead = 500; this.monsterFull = 750; break;
 	}
 
 	// PLAYER DICE
@@ -308,7 +307,7 @@ function Player(monsterSelected)
 	this.resolvedDice = [0, 0, 0, 0, 0, 0];
 
 	// PLAYER STAT LOCATIONS
-	switch(currentPlayer)
+	switch (currentPlayer)
 	{
 		// player 1 topLeft, player 2 topRight, player 3 bottomLeft, player 4 bottomRight
 		// [[[[[ health x, y, score x, y, energy x, y, head x, y ]]]]]
@@ -350,8 +349,8 @@ function PlayerTurn()
 {
 	// necessary?
 	//	if (gameOver == false)
-	WriteStroke("Player: " + currentPlayer,(stageWidth/3),100);
-	WriteStroke("Current Roll:  " + currentRoll + " (of " + players[currentPlayer].rollCount + ")", stageWidth / 2, 100);
+	WriteStroke(`Player: ${currentPlayer}`,(stageWidth/3),100);
+	WriteStroke(`Current Roll: ${currentRoll} (of ${players[currentPlayer].rollCount})`, stageWidth / 2, 100);
 	UpdateStats();
 	ShowPlayerCards();
 }
@@ -364,21 +363,21 @@ function AttackTokyo()
 		if (players[e].isInTokyo == true)
 		{
 			// don't reduce health for Jets
-			if (players[e].cards.indexOf("Jets") == -1)
+			if (players[e].cards.indexOf('Jets') == -1)
 			{
 				players[e].health -= diceRoll[4].length;
 			}
 
 			if (players[e].health <= 0)
 			{
-				Ticker("Player " + e + " died in Tokyo!\n\nPlayer " + currentPlayer + " takes their place!");
+				Ticker(`Player ${e} died in Tokyo!\n\nPlayer ${currentPlayer} takes their place!`);
 				players[currentPlayer].isInTokyo = true;
 				tokyoOccupiedBy = currentPlayer;
 				players[currentPlayer].score++;
 				// Set alive to false so the warning doesn't go off during updateStats
 				players[e].alive = false;
 				players[e].isInTokyo = false;
-				players[e].health = "X_X";
+				players[e].health = 'X_X';
 				deadPlayers++;
 
 				// do not ask occupier if they want to leave
@@ -387,33 +386,34 @@ function AttackTokyo()
 			}
 			else
 			{
-				var exitTokyo = confirm("Player " + e + ", you were attacked and took " + diceRoll[4].length + " damage!\nDo you want to yield Tokyo?");
+				var exitTokyo = confirm(`Player ${e}, you were attacked and took ${diceRoll[4].length} damage!\n
+					Do you want to yield Tokyo?`);
 
 				switch (exitTokyo)
 				{
 					case true:
 						// players in tokyo with jets don't take damage if they yield
-						if (players[e].cards.indexOf("Jets") > -1)
+						if (players[e].cards.indexOf('Jets') > -1)
 						{
-							PlayKeep("Jets");
+							PlayKeep('Jets');
 						}
 						players[e].isInTokyo = false;
 						players[currentPlayer].isInTokyo = true;
 						tokyoOccupiedBy = currentPlayer;
-						Ticker("Player " + currentPlayer + " takes over Tokyo!");
+						Ticker(`Player ${currentPlayer} takes over Tokyo!`);
 						// player gets a point for entering Tokyo
 						players[currentPlayer].score++;
 						return;
 
 					case false:
-						if (players[e].cards.indexOf("Jets") > -1)
+						if (players[e].cards.indexOf('Jets') > -1)
 						{
 							players[e].health -= diceRoll[4].length;
 						}
 						break;
 
 					default: 
-						Ticker("Y or N, ya dingus!"); 
+						Ticker('Y or N, ya dingus!');
 						AttackTokyo();
 				}
 			}
@@ -452,7 +452,7 @@ function FinishTurn()
 	if (players[currentPlayer].isInTokyo == true && currentRoll == 0)
 	{
 		players[currentPlayer].score += 2;
-		Ticker("Player " + currentPlayer + " earned 2 points for staying in Tokyo!");
+		Ticker(`Player ${currentPlayer} earned 2 points for staying in Tokyo!`);
 	}
 }
 
@@ -479,8 +479,8 @@ function UpdateStats()
 
 		if (players[p].health == 0 && players[p].alive == true)
 		{
-			Ticker("Player " + p + " died!");
-			players[p].health = "DEAD";
+			Ticker(`Player ${p} died!`);
+			players[p].health = 'DEAD';
 			players[p].alive = false;
 			deadPlayers++;
 		}
@@ -488,7 +488,8 @@ function UpdateStats()
 		if (players[p].score >= 20)
 		{
 			gameOver = true;
-			gameOverMessage = "GAME OVER!\nPlayer " + p + " wins with a score of " + players[p].score + "!";
+			gameOverMessage = `GAME OVER!\n
+				Player ${p} wins with a score of ${players[p].score}!`;
 		}
 	}
 
@@ -501,14 +502,16 @@ function UpdateStats()
 			if (players[p].alive == true)
 			{
 				gameOver = true;
-				gameOverMessage = "GAME OVER!\nPlayer " + p + " is the last player standing!";
+				gameOverMessage = `GAME OVER!\n
+					Player ${p} is the last player standing!`;
 			}
 		}
 	}
 	if (deadPlayers == playerCount)
 	{
 		gameOver = true;
-		gameOverMessage = "GAME OVER!\nAll players died!? I don't even...";
+		gameOverMessage = `GAME OVER!\n
+			All players died!? I don't even...`;
 	}
 }
 
@@ -546,7 +549,7 @@ function Ticker(message,bits)
 	{
 		if (tickerStream.length > 0)
 		{
-			tickerStream = tickerStream + " : " + ticker[text];
+			tickerStream = `${tickerStream} : ${ticker[text]}`;
 		}
 		else
 		{

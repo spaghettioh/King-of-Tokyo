@@ -12,8 +12,8 @@ body
 
 @font-face
 {
-	font-family: "GOODGIRL";
-	src: local('GOODGIRL'), url("assets/GOODGIRL.ttf");
+	font-family: 'GOODGIRL';
+	src: local('GOODGIRL'), url('assets/GOODGIRL.ttf');
 }
 
 #game

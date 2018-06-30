@@ -1,25 +1,25 @@
 function MouseMoved(e)
 {
-	var mouseX = e.pageX - canvasElement.offsetLeft;
-	var mouseY = e.pageY - canvasElement.offsetTop;
-	var canvas = e.target;
+	var mouseX = e.pageX - canvas.offsetLeft;
+	var mouseY = e.pageY - canvas.offsetTop;
+	var dom = e.target;
 	
 	if (ctx.isPointInPath(mouseX, mouseY))
 	{
-		canvas.style.cursor = 'pointer';
+		dom.style.cursor = 'pointer';
 		return;
 	}
 	
 	// Return the cursor to the default style
-	canvas.style.cursor = 'default';
+	dom.style.cursor = 'default';
 }
 
 
 
 function MouseClicked(e)
 {
-	var mouseX = e.pageX - canvasElement.offsetLeft;
-	var mouseY = e.pageY - canvasElement.offsetTop;
+	var mouseX = e.pageX - canvas.offsetLeft;
+	var mouseY = e.pageY - canvas.offsetTop;
 	
 	// Four players max for now
 	// homescreen player selection
@@ -49,27 +49,27 @@ function MouseClicked(e)
 		{
 			if (mouseX >= 0 && mouseX <= stageWidth / 6)
 			{
-				players[currentPlayer] = new Player("alien");
+				players[currentPlayer] = new Player('alien');
 			}
 			else if (mouseX >= stageWidth / 6 && mouseX <= (stageWidth / 6) * 2)
 			{
-				players[currentPlayer] = new Player("bunny");
+				players[currentPlayer] = new Player('bunny');
 			}
 			else if (mouseX >= (stageWidth / 6) * 2 && mouseX <= (stageWidth / 6) * 3)
 			{
-				players[currentPlayer] = new Player("zaur");
+				players[currentPlayer] = new Player('zaur');
 			}
 			else if (mouseX >= (stageWidth / 6) * 3 && mouseX <= (stageWidth / 6) * 4)
 			{
-				players[currentPlayer] = new Player("kraken");
+				players[currentPlayer] = new Player('kraken');
 			}
 			else if (mouseX >= (stageWidth / 6) * 4 && mouseX <= (stageWidth / 6) * 5)
 			{
-				players[currentPlayer] = new Player("dragon");
+				players[currentPlayer] = new Player('dragon');
 			}
 			else if (mouseX >= (stageWidth / 6) * 5 && mouseX <= stageWidth)
 			{
-				players[currentPlayer] = new Player("king");
+				players[currentPlayer] = new Player('king');
 			}
 		}
 		currentPlayer++;
@@ -89,15 +89,15 @@ function MouseClicked(e)
 				// first card
 				if (mouseX > 170 && mouseX < 170 + (cardSizeWidth * 2.2))
 				{
-					console.log("trying to buy first card");
+					console.log('trying to buy first card');
 				}
 				else if (mouseX > 170 + (cardSizeWidth * 2.2) && mouseX < 170 + (cardSizeWidth * 2.2 * 2))
 				{
-					console.log("trying to buy second card");
+					console.log('trying to buy second card');
 				}
 				else if (mouseX > 170 + (cardSizeWidth * 2.2 * 2) && mouseX < 630)
 				{
-					console.log("trying to buy third card");
+					console.log('trying to buy third card');
 				}
 			}
 		}
@@ -150,7 +150,7 @@ function KeyPressed(e)
 					}
 					else
 					{
-						Ticker("You can't afford to clear the table.");
+						Ticker(`You can't afford to clear the table.`);
 					}
 				}
 				break;
@@ -168,7 +168,7 @@ function KeyPressed(e)
 				if (currentRoll > 0 && currentRoll < 3 && canRoll == true) 
 				{
 					canRoll = false;
-					Ticker("Player " + currentPlayer + " stays!");
+					Ticker(`Player ${currentPlayer} stays!`);
 					ResolveDice();
 				}
 				break;

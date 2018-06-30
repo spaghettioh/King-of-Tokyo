@@ -22,12 +22,12 @@ function SetupDice() {
 
 function Dice()
 {
-	this.side0 = "health";
-	this.side1 = "1";
-	this.side2 = "2";
-	this.side3 = "3";
-	this.side4 = "attack";
-	this.side5 = "energy";
+	this.side0 = 'health';
+	this.side1 = '1';
+	this.side2 = '2';
+	this.side3 = '3';
+	this.side4 = 'attack';
+	this.side5 = 'energy';
 	this.sides = [this.side0, this.side1, this.side2, this.side3, this.side4, this.side5]
 	this.currentSide = 0;
 	this.kept = false;
@@ -36,7 +36,10 @@ function Dice()
 	{
 		// default y pos for black dice
 		var ypos = 0;
-		if (color == "green") {ypos = dieSize;}
+		if (color === 'green')
+		{
+			ypos = dieSize;
+		}
 
 		// draw the die!
 		if (this.kept == false)
@@ -70,7 +73,9 @@ function RollDice(tumble)
 	if (tumble > 1)
 	{
 		canRoll = false;
-		setTimeout(function(){RollDice(tumble)},500/tumble);
+		setTimeout(function(){
+			RollDice(tumble);
+		},500/tumble);
 	}
 	else
 	{
@@ -114,19 +119,19 @@ function ResolveDice()
 	{
 		switch(rolledDice[d])
 		{
-			case "health": diceRoll[0].push("health"); break;
-			case "1": diceRoll[1].push("1"); break;
-			case "2": diceRoll[2].push("2"); break;
-			case "3": diceRoll[3].push("3"); break;
-			case "attack": diceRoll[4].push("attack"); break;
-			case "energy": diceRoll[5].push("energy"); break;
+			case 'health': diceRoll[0].push('health'); break;
+			case '1': diceRoll[1].push('1'); break;
+			case '2': diceRoll[2].push('2'); break;
+			case '3': diceRoll[3].push('3'); break;
+			case 'attack': diceRoll[4].push('attack'); break;
+			case 'energy': diceRoll[5].push('energy'); break;
 		}
 	}
 
 	// Background dweller - reroll any 3
-	if (diceRoll[3].length > 0 && players[currentPlayer].cards.indexOf("Background Dweller") > -1)
+	if (diceRoll[3].length > 0 && players[currentPlayer].cards.indexOf('Background Dweller') > -1)
 	{
-		PlayKeep("Background Dweller");
+		PlayKeep('Background Dweller');
 	}
 
 	var attackingTokyo = false;
@@ -172,7 +177,7 @@ function ResolveDice()
 					// player wins if score >= 20
 					if (players[currentPlayer].score >= 20)
 					{
-						gameOverMessage = "Player " + currentPlayer + " wins with a score of " + players[currentPlayer].score + "!";
+						gameOverMessage = `Player ${currentPlayer} wins with a score of ${players[currentPlayer].score}!`;
 						gameOver = true;
 						return;
 					}
@@ -183,7 +188,7 @@ function ResolveDice()
 					// player occupies Tokyo if empty
 					if (tokyoOccupiedBy == 0)
 					{
-						Ticker("Player " + currentPlayer + " rolled an attack and entered Tokyo!");
+						Ticker(`Player ${currentPlayer} rolled an attack and entered Tokyo!`);
 						tokyoOccupiedBy = currentPlayer;
 						players[currentPlayer].isInTokyo = true;
 						players[currentPlayer].score++;
