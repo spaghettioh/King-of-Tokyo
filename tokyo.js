@@ -9,10 +9,12 @@ King of Tokyo Copyright Richard Garfield and Iello Games
 var ctx;
 var stageWidth = 800;
 var stageHeight = 480;
+var stageCenterXY = [stageWidth / 2, stageHeight / 2];
 var canvas;
 var imgLoader;
 
 // GAMEPLAY
+// ============== CAREFUL: Monster order is relative to image position
 var tokyoOccupiedBy = 0;
 var homeScreen = false;
 var playerSelectScreen = false;
@@ -30,14 +32,21 @@ var cardsOut = [];
 var tableCardsPreview = false;
 
 // PLAYERS
+var characters = ['Alien', 'Cyber Bunny', 'Gigazaur', 'Kraken', 'Dragon', 'King'];
+var monsters = [];
+var iconWH = 130;
+var iconCenter = iconWH / 2;
+var headWH = 100;
+var headCenter = headWH / 2;
+var fullWH = 150;
+var fullCenter = fullWH / 2;
+
 var playerCount;
 var players = [];
 var currentPlayer;
 var deadPlayers = 0;
 var imgMonstersFull;
 var imgMonsterHeads;
-var monsterHeadWidth = 100;
-var monsterFullWidth = 150;
 
 // GLOBAL STATS
 var totalResolvedDice = [0, 0, 0, 0, 0, 0];
@@ -117,6 +126,7 @@ function Start()
 
 	SetupDice();
 	SetupDeck();
+	SetupMonsters();
 
 	// Kick off update at the homescreen
 	homeScreen = true;
@@ -264,7 +274,6 @@ function PlayerSelect(whichPlayer)
 	{
 		homeScreen = false;
 		playerSelectScreen = true;
-
 		WriteStroke(`Player ${whichPlayer}, select a character!`,100, 30);
 	}
 	else
@@ -273,84 +282,13 @@ function PlayerSelect(whichPlayer)
 	}
 }
 
-function Player(monsterSelected)
-{
-	// PLAYER STATS
-	this.health = 2;
-	this.score = 0;
-	this.energy = 50;
-
-	// PLAYER ATTRIBUTES
-	this.healthMax = 10;
-	this.isInTokyo = false;
-	this.alive = true;
-	this.cards = [];
-	this.isPoisoned = false;
-	this.monster = monsterSelected;
-
-	// monster images based on selection
-	switch (this.monster)
-	{
-		case 'alien': this.monsterHead = 0; this.monsterFull = 0; break;
-		case 'bunny': this.monsterHead = 100; this.monsterFull = 150; break;
-		case 'zaur': this.monsterHead = 200; this.monsterFull = 300; break;
-		case 'kraken': this.monsterHead = 300; this.monsterFull = 450; break;
-		case 'dragon': this.monsterHead = 400; this.monsterFull = 600; break;
-		case 'king': this.monsterHead = 500; this.monsterFull = 750; break;
-	}
-
-	// PLAYER DICE
-	this.diceCount = 6;
-	this.rollCount = 3;
-
-	// DICE METRICS health, 1, 2, 3, attack, energy
-	this.resolvedDice = [0, 0, 0, 0, 0, 0];
-
-	// PLAYER STAT LOCATIONS
-	switch (currentPlayer)
-	{
-		// player 1 topLeft, player 2 topRight, player 3 bottomLeft, player 4 bottomRight
-		// [[[[[ health x, y, score x, y, energy x, y, head x, y ]]]]]
-		case 1: this.statsXY = [35,9,90,9,135,9,10,30]; break;
-		case 2: this.statsXY = [665,9,720,9,770,9,stageWidth - monsterHeadWidth - 10, 30]; break;
-		case 3: this.statsXY = [35,455,90,455,135,455,10,stageHeight-monsterHeadWidth - 30]; break;
-		case 4: this.statsXY = [665,455,720,455,770,455,stageWidth-monsterHeadWidth - 10, stageHeight-monsterHeadWidth - 30]; break;
-	}
-
-	this.Draw = function()
-	{
-		if (this.alive == true)
-		{
-			// draw player picture
-			if (this.isInTokyo == true)
-			{
-				ctx.drawImage(imgMonstersFull,this.monsterFull,0,monsterFullWidth,monsterFullWidth,(stageWidth / 2) - (monsterFullWidth / 2),(stageHeight / 2) - (monsterFullWidth / 2), monsterFullWidth, monsterFullWidth);
-				// write tokyo where head should be
-				WriteStroke("In Tokyo",this.statsXY[6]+20,this.statsXY[7]+50)
-			}
-			else
-			{
-				ctx.drawImage(imgMonsterHeads,this.monsterHead,0,monsterHeadWidth,monsterHeadWidth,this.statsXY[6],this.statsXY[7],monsterHeadWidth,monsterHeadWidth);
-			}
-		}
-
-		// write stats
-		WriteStroke(this.health, this.statsXY[0], this.statsXY[1]);
-		WriteStroke(this.score, this.statsXY[2], this.statsXY[3]);
-		WriteStroke(this.energy, this.statsXY[4], this.statsXY[5]);
-	};
-}
-
-
-
-
 
 function PlayerTurn()
 {
 	// necessary?
 	//	if (gameOver == false)
 	WriteStroke(`Player: ${currentPlayer}`,(stageWidth/3),100);
-	WriteStroke(`Current Roll: ${currentRoll} (of ${players[currentPlayer].rollCount})`, stageWidth / 2, 100);
+//	WriteStroke(`Current Roll: ${currentRoll} (of ${players[currentPlayer].rollCount})`, stageWidth / 2, 100);
 	UpdateStats();
 	ShowPlayerCards();
 }
