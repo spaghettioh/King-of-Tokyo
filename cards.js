@@ -84,48 +84,45 @@ var cards = [
 
 function SetupDeck()
 {
-	var deck = [];
+	let deck = [];
 
 	// create the deck
-	for (var c = 0; c < cards.length; c++)
+	for (let i in cards)
 	{
-		deck[c] = new Card(c)
+		deck[i] = new Card(cards[i]);
 	}
-	
 	// now shuffle it
 	// grab a random card, check see if in shuffled deck already before adding, until all cards are in the shuffled deck
-	for (var c = 0; shuffledDeck.length < deck.length; c++)
+	for (let i; shuffledDeck.length < deck.length; i++)
 	{
-		var randomCard = Math.floor(Math.random() * deck.length);
+		let randomCard = Math.floor(Math.random() * deck.length);
 		
-		if (shuffledDeck.indexOf(deck[randomCard]) == -1)
+		if (shuffledDeck.indexOf(deck[randomCard]) === -1)
 		{
 			shuffledDeck.push(deck[randomCard]);
 		}
 	}
 	
-	// deal the cards
-	ResetCardsOnTable([1,1,1]);
 }
 
-function Card(c)
+function Card(card)
 {
-	this.name = cards[c][0];
-	this.cost = cards[c][1];
-	this.type = cards[c][2];
-	this.desc = cards[c][3];
-	this.column = cards[c][4];
-	this.row = cards[c][5];
+	this.name = card[0];
+	this.cost = card[1];
+	this.type = card[2];
+	this.desc = card[3];
+	this.column = card[4];
+	this.row = card[5];
 	this.owner = 0;
 	this.Draw = function Draw(size, whereX, whereY)
 	{
 		// subtracting dimensions to start at 0 column and 0 row
 		// (column*width)-width = actual column
-		var column = (this.column - 1) * cardSizeWidth;
-		var row = (this.row - 1) * cardSizeHeight;
+		let column = (this.column - 1) * cardSizeWidth;
+		let row = (this.row - 1) * cardSizeHeight;
 		// assigning temp vals in case they get drawn somewhere on accident
-		var tempSizeWidth = 10;
-		var tempSizeHeight = 10;
+		let tempSizeWidth = 10;
+		let tempSizeHeight = 10;
 		
 		if (size == 'big')
 		{

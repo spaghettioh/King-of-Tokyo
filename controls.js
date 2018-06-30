@@ -132,12 +132,17 @@ function MouseClicked(e)
         
 function KeyPressed(e)
 {
-	if (gameActive == true && gameOver == false)
+	if (gameActive && !gameOver)
 	{
 		switch (e.keyCode)
 		{
 			// down key - roll
-			case 40: if (currentRoll < players[currentPlayer].rollCount && canRoll == true) {RollDice(tumbleCounter);} break;
+			case 40: 
+				if (currentRoll < players[currentPlayer].rollCount && canRoll)
+				{
+					RollDice(tumbleCounter);
+				}
+				break;
 		
 			// up key - next player
 			case 38: if (currentRoll >= 3) {FinishTurn()} break; // using static roll counter because giant brain adds another

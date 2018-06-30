@@ -115,7 +115,7 @@ function Start()
 	canvas.style.height = stageHeight;
 	canvas.addEventListener('click', MouseClicked, false);
 	canvas.addEventListener('mousemove', MouseMoved, false);
-	canvas.addEventListener('keydown',KeyPressed,false);
+	addEventListener('keydown', KeyPressed, false);
 
 	ctx = canvas.getContext('2d');
 	ctx.canvas.width = stageWidth;
@@ -139,7 +139,7 @@ function Start()
 
 
 function Update() {
-	tickerX = 10;
+	tickerX += 10;
 	ctx.clearRect(0, 0, stageWidth, stageHeight);
 
 	if (homeScreen)
@@ -155,10 +155,10 @@ function Update() {
 	if (playerSelectScreen)
 	{
 		ctx.drawImage(imgPlayerSelect, 0, 0);
-		PlayerSelect(currentPlayer);
 		// draw paths over characters for hover
 		ctx.beginPath();
 		ctx.rect(0, 100, 800, 265);
+		PlayerSelect(currentPlayer);
 	}
 
 	if (gameActive)
@@ -266,137 +266,6 @@ function Update() {
 		}
 	}
 }
-
-function PlayerSelect(whichPlayer)
-{
-	// players select a character until all players are setup
-	if (whichPlayer <= playerCount)
-	{
-		homeScreen = false;
-		playerSelectScreen = true;
-		WriteStroke(`Player ${whichPlayer}, select a character!`,100, 30);
-	}
-	else
-	{
-		playerSelectScreen = false;
-		currentPlayer = 1;
-		gameActive = true;
-	}
-}
-
-
-function PlayerTurn()
-{
-	// necessary?
-	//	if (gameOver == false)
-	WriteStroke(`Player: ${currentPlayer}`,(stageWidth/3),100);
-//	WriteStroke(`Current Roll: ${currentRoll} (of ${players[currentPlayer].rollCount})`, stageWidth / 2, 100);
-	UpdateStats();
-	ShowPlayerCards();
-}
-
-function AttackTokyo()
-{
-	// look for enemies in Tokyo
-	for (var e = 1; e <= playerCount; e++)
-	{
-		if (players[e].isInTokyo == true)
-		{
-			// don't reduce health for Jets
-			if (players[e].cards.indexOf('Jets') == -1)
-			{
-				players[e].health -= diceRoll[4].length;
-			}
-
-			if (players[e].health <= 0)
-			{
-				Ticker(`Player ${e} died in Tokyo!\n\nPlayer ${currentPlayer} takes their place!`);
-				players[currentPlayer].isInTokyo = true;
-				tokyoOccupiedBy = currentPlayer;
-				players[currentPlayer].score++;
-				// Set alive to false so the warning doesn't go off during updateStats
-				players[e].alive = false;
-				players[e].isInTokyo = false;
-				players[e].health = 'X_X';
-				deadPlayers++;
-
-				// do not ask occupier if they want to leave
-				attackingTokyo = false;
-				return;
-			}
-			else
-			{
-				var exitTokyo = confirm(`Player ${e}, you were attacked and took ${diceRoll[4].length} damage!\n
-					Do you want to yield Tokyo?`);
-
-				switch (exitTokyo)
-				{
-					case true:
-						// players in tokyo with jets don't take damage if they yield
-						if (players[e].cards.indexOf('Jets') > -1)
-						{
-							PlayKeep('Jets');
-						}
-						players[e].isInTokyo = false;
-						players[currentPlayer].isInTokyo = true;
-						tokyoOccupiedBy = currentPlayer;
-						Ticker(`Player ${currentPlayer} takes over Tokyo!`);
-						// player gets a point for entering Tokyo
-						players[currentPlayer].score++;
-						return;
-
-					case false:
-						if (players[e].cards.indexOf('Jets') > -1)
-						{
-							players[e].health -= diceRoll[4].length;
-						}
-						break;
-
-					default: 
-						Ticker('Y or N, ya dingus!');
-						AttackTokyo();
-				}
-			}
-		}
-	}
-}
-
-
-
-function FinishTurn()
-{
-	// next player
-	currentPlayer++;
-	if (currentPlayer > playerCount) 
-	{
-		currentPlayer = 1;
-	}
-	// skip dead players
-	if (players[currentPlayer].alive == false) 
-	{
-		FinishTurn();
-	}
-
-
-	// reset dice roll
-	currentRoll = 0;
-	canRoll = true;
-	rolledDice = [];
-	for (var d in dice) 
-	{
-		dice[d].kept = false;
-	}
-	diceRoll = [ [], [], [], [], [], [] ];
-
-	// player earns 2 points if in Tokyo
-	if (players[currentPlayer].isInTokyo == true && currentRoll == 0)
-	{
-		players[currentPlayer].score += 2;
-		Ticker(`Player ${currentPlayer} earned 2 points for staying in Tokyo!`);
-	}
-}
-
-
 
 function UpdateStats()
 {
