@@ -5,6 +5,10 @@ http://www.spaghettioh.com
 King of Tokyo Copyright Richard Garfield and Iello Games
 ****************************************/
 
+// context.drawImage(img,x,y);
+// context.drawImage(img,x,y,width,height);
+// context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+
 // STAGE VARS
 var ctx;
 var stageWidth = 800;

@@ -87,8 +87,8 @@ function Player(whichMonster)
 			if (this.isInTokyo === true)
 			{
 				ctx.save();
-				ctx.translate(stageCenterXY[0], stageCenterXY[1]);
-				ctx.drawImage(this.full,stageCenter[0],0,fullWH,monsterFullWidth,(stageWidth / 2) - (monsterFullWidth / 2),(stageHeight / 2) - (monsterFullWidth / 2), monsterFullWidth, monsterFullWidth);
+				ctx.translate(stageCenterXY[0] - (fullWH / 2), stageCenterXY[1] - (fullWH / 2));
+				ctx.drawImage(this.monster.fullImage, this.monster.fullStart, 0, fullWH, fullWH, 0, 0, fullWH, fullWH);
 				ctx.restore();
 				// placeholder text when in Tokyo
 				WriteStroke("In Tokyo",this.statsXY[6]+20,this.statsXY[7]+50)
