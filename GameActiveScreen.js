@@ -106,3 +106,106 @@ var GameActiveScreen = new function ()
 		}
 	}
 }
+
+function UpdateStats()
+{
+	// alert for players that died last round
+	for (var p = 1; p <= playerCount; p++)
+	{
+		// correct invalid values
+		if (players[p].health < 0)
+		{
+			players[p].health = 0;
+		}
+		if (players[p].health > players[p].healthMax)
+		{
+			players[p].health = players[p].healthMax;
+		}
+		if (players[p].score < 0)
+		{
+			players[p].score = 0;
+		}
+
+		if (players[p].health == 0 && players[p].alive == true)
+		{
+			Ticker(`Player ${p} died!`);
+			players[p].health = 'DEAD';
+			players[p].alive = false;
+			deadPlayers++;
+		}
+		// game over if score >= 20
+		if (players[p].score >= 20)
+		{
+			gameOver = true;
+			gameOverMessage = `GAME OVER!\n
+				Player ${p} wins with a score of ${players[p].score}!`;
+		}
+	}
+
+	// game over if one player remains
+	if (deadPlayers == (playerCount - 1))
+	{
+		// find the alive player
+		for (var p = 1; p <= playerCount; p++)
+		{
+			if (players[p].alive == true)
+			{
+				gameOver = true;
+				gameOverMessage = `GAME OVER!\n
+					Player ${p} is the last player standing!`;
+			}
+		}
+	}
+	if (deadPlayers == playerCount)
+	{
+		isGameOver = true;
+		gameOverMessage = `GAME OVER!\n
+			All players died!? I don't even...`;
+	}
+}
+
+
+
+function GameOverScreen(reason)
+{
+	isGameOver = true;
+
+}
+
+
+function Ticker(message,bits)
+{
+	if (ticker.length >= 2)
+	{
+		ticker.shift();
+		ticker.push(message);
+	}
+	else
+	{
+		ticker.push(message);
+	}
+
+	for (var text = 0; text < ticker.length; text++)
+	{
+		if (tickerStream.length > 0)
+		{
+			tickerStream = `${tickerStream} : ${ticker[text]}`;
+		}
+		else
+		{
+			tickerStream = ticker[text];
+		}
+	}
+
+	/*	if (message == undefined) {return}
+	if (length == undefined) {length = 10}
+
+	writeStroke(message,(stageWidth / 2) - 250, 130);
+
+	if (length > 0)
+	{
+	length--;
+	setTimeout(function(){notification(message,length)},length*100);
+	}
+	*/
+}
