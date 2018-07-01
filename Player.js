@@ -1,7 +1,7 @@
 function SetupMonsters()
 {
-	var headX = 0, fullX = 0;
-	for (var i in characters)
+	let headX = 0, fullX = 0;
+	for (let i in characters)
 	{
 		monsters[i] = new function Monster()
 		{
@@ -32,7 +32,7 @@ function Player(whichMonster)
 	this.monster = new function monster ()
 	{
 		// grab the monster image props based on the chosen monster
-		for (var i in monsters)
+		for (let i in monsters)
 		{
 			if (monsters[i].name === whichMonster)
 			{

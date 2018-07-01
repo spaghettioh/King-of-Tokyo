@@ -1,4 +1,4 @@
-var HomeScreen = new function HomeScreen ()
+var HomeScreen = new function ()
 {
 	this.Update = function()
 	{
