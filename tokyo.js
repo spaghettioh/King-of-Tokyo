@@ -73,10 +73,10 @@ function preloadImages()
 		'monsterHeads', 'monstersFull',
 		'cover', 'playerSelect', 'gameBoard', 'gameOver'
 		];
-	for (let image in images)
+	images.forEach( function(image)
 	{
-		imageLoader.AddImage(`assets/${images[image]}.png`, `${images[image]}`);
-	}
+		imageLoader.AddImage(`assets/${image}.png`, `${image}`);
+	});
 	// call Start() when done assigning images
 	imageLoader.OnReadyCallback = Start;
 	imageLoader.LoadImages();
@@ -92,16 +92,16 @@ function Start()
 	ctx.canvas.width = stageWidth;
 	ctx.canvas.height = stageHeight;
 	canvas.addEventListener('mousemove', function(e) 
+	{
+		mouseX = e.pageX - canvas.offsetLeft;
+		mouseY = e.pageY - canvas.offsetTop;
+		if (ctx.isPointInPath(mouseX, mouseY))
 		{
-			mouseX = e.pageX - canvas.offsetLeft;
-			mouseY = e.pageY - canvas.offsetTop;
-			if (ctx.isPointInPath(mouseX, mouseY))
-			{
-				e.target.style.cursor = 'pointer';
-				return;
-			}
-			e.target.style.cursor = 'default';
-		}, false);
+			e.target.style.cursor = 'pointer';
+			return;
+		}
+		e.target.style.cursor = 'default';
+	}, false);
 	canvas.addEventListener('click', MouseClicked, false);
 	addEventListener('keydown', KeyPressed, false);
 

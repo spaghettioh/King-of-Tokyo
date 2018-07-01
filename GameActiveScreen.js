@@ -6,28 +6,26 @@ var GameActiveScreen = new function ()
 		ctx.drawImage(imageLoader.GetImage('gameBoard'), 0, 0);
 
 		// draw players and their stats
-		for (var p in players)
+		players.forEach( function(player)
 		{
-			players[p].Draw();
-		}
+			player.Draw();
+		});
 
 		PlayerTurn();
 
-		// draw the dealt cards
-		for (var card in cardsOnTable)
+		cardsOnTable.forEach( function(card, pos)
 		{
-			// card details starting position
-			var cardX = 170 + (480 / 3 * card);
+			var cardX = 170 + (480 / 3 * pos);
 
 			if (tableCardsPreview)
 			{
-				cardsOnTable[card].Draw('big', cardX, 480 - (cardSizeHeight / 2.2));
+				card.Draw('big', cardX, 480 - (cardSizeHeight / 2.2));
 			}
 			else
 			{
-				cardsOnTable[card].Draw('big', cardX, 440);
+				card.Draw('big', cardX, 440);
 			}
-		}
+		});
 
 		// draw paths over cardsOnTable for hover
 		ctx.beginPath();
@@ -88,18 +86,17 @@ var GameActiveScreen = new function ()
 
 			// display player & global stats
 			var playerX = 20;
-
-			for (var p in players)
+			players.forEach( function(player, p)
 			{
 				var playerY = 100;
 
 				WriteStroke(`Player ${p}`, playerX, playerY);
-				WriteStroke(players[p].score, playerX, playerY += 20);
-				WriteStroke(players[p].health, playerX, playerY += 20);
-				WriteStroke(players[p].energy, playerX, playerY += 20);
-				WriteStroke(players[p].energy, playerX, playerY += 20);
+				WriteStroke(player.score, playerX, playerY += 20);
+				WriteStroke(player.health, playerX, playerY += 20);
+				WriteStroke(player.energy, playerX, playerY += 20);
+				WriteStroke(player.energy, playerX, playerY += 20);
 				playerX += 150;
-			}
+			});
 
 			// restart message
 			WriteStroke(`Click anywhere to play again!`, 20, stageHeight - 29);
@@ -143,7 +140,7 @@ function UpdateStats()
 	}
 
 	// game over if one player remains
-	if (deadPlayers == (playerCount - 1))
+	if (deadPlayers === (playerCount - 1))
 	{
 		// find the alive player
 		for (var p = 1; p <= playerCount; p++)
