@@ -125,7 +125,7 @@ function Start()
 	canvas.addEventListener('click', MouseClicked, false);
 	addEventListener('keydown', KeyPressed, false);
 
-	ctx.fillStyle = '#FFFFFF';
+	// font defaults
 	ctx.font = '20px \'GOODGIRL\'';
 	ctx.textBaseline = 'top';
 
@@ -332,8 +332,20 @@ function GameOverScreen(reason)
 
 function WriteStroke(text,x,y)
 {
-	ctx.fillText(text, x, y);
+	let gradient;
+
+	ctx.lineWidth = 5;
+    gradient = ctx.createLinearGradient(0, y, 0, y + 20);
+	gradient.addColorStop('0.0','#555555');
+	gradient.addColorStop('1.0','#000000');
+	ctx.strokeStyle = gradient;
 	ctx.strokeText(text, x, y);
+
+	gradient = ctx.createLinearGradient(0, y, 0, y + 20);
+	gradient.addColorStop('0.0','#EDEDED');
+	gradient.addColorStop('1.0','#FFFFFF');
+	ctx.fillStyle = gradient;
+	ctx.fillText(text, x, y);
 }
 
 
@@ -374,11 +386,3 @@ function Ticker(message,bits)
 	}
 	*/
 }
-
-
-
-
-
-
-
-
