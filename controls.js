@@ -1,21 +1,3 @@
-function MouseMoved(e)
-{
-	var mouseX = e.pageX - canvas.offsetLeft;
-	var mouseY = e.pageY - canvas.offsetTop;
-	var dom = e.target;
-	
-	if (ctx.isPointInPath(mouseX, mouseY))
-	{
-		dom.style.cursor = 'pointer';
-		return;
-	}
-	
-	// Return the cursor to the default style
-	dom.style.cursor = 'default';
-}
-
-
-
 function MouseClicked(e)
 {
 	var mouseX = e.pageX - canvas.offsetLeft;
@@ -23,7 +5,7 @@ function MouseClicked(e)
 	
 	// Four players max for now
 	// homescreen player selection
-	if (homeScreen)
+	if (isHomeScreen)
 	{
 		// two 444, 380, 488, 440
 		if (mouseX >= 444 && mouseX <= 488 && mouseY >= 380 && mouseY < 440)
@@ -45,7 +27,7 @@ function MouseClicked(e)
 		}
 	}
 	
-	if (playerSelectScreen)
+	if (isPlayerSelectScreen)
 	{
 		if (mouseY >= 100 && mouseY <= 365)
 		{
@@ -119,7 +101,7 @@ function MouseClicked(e)
 	// 	}
 	// }
 	
-	if (gameOver)
+	if (isGameOver)
 	{
 		if (ctx.isPointInPath(mouseX, mouseY)) 
 		{
@@ -132,7 +114,7 @@ function MouseClicked(e)
         
 function KeyPressed(e)
 {
-	if (gameActive && !gameOver)
+	if (isGameActive && !isGameOver)
 	{
 		switch (e.keyCode)
 		{

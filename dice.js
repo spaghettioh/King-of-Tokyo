@@ -3,7 +3,6 @@ var dice = [];
 var rolledDice = [];
 var canRoll = true;
 var tumbleCounter = 10;
-var imgDice;
 var dieKeepImg;
 var dieSize = 50;
 // Count types of dice into an array for resolving dice
@@ -15,43 +14,39 @@ var currentRoll = 0;
 
 function SetupDice() {
 	// generate 8 dice, 6 + 2
-	for (var i = 1; i <= 8; i++) {
-		dice[i] = new Dice()
-	}
-}
-
-function Dice()
-{
-	this.side0 = 'health';
-	this.side1 = '1';
-	this.side2 = '2';
-	this.side3 = '3';
-	this.side4 = 'attack';
-	this.side5 = 'energy';
-	this.sides = [this.side0, this.side1, this.side2, this.side3, this.side4, this.side5]
-	this.currentSide = 0;
-	this.kept = false;
-
-	this.Draw = function(color, side, whereX, whereY)
+	for (var i = 1; i <= 8; i++)
 	{
-		// default y pos for black dice
-		var ypos = 0;
-		if (color === 'green')
+		dice[i] = new function()
 		{
-			ypos = dieSize;
-		}
+			// this is one die, didn't want to use Die() for reasons
+			this.sides = ['health', '1', '2', '3', 'attack', 'energy'];
+			this.currentSide = 0;
+			this.kept = false;
+			this.image = imageLoader.GetImage('dice');
+			this.imageKeep = imageLoader.GetImage('diceKeep');
 
-		// draw the die!
-		if (this.kept == false)
-		{
-			ctx.drawImage(imgDice, dieSize * side, ypos, dieSize, dieSize, whereX, whereY, dieSize, dieSize);
+			this.Draw = function(color, side, whereX, whereY)
+			{
+				// default y pos for black dice
+				var ypos = 0;
+				if (color === 'green')
+				{
+					ypos = dieSize;
+				}
+
+				// draw the die
+				if (this.kept == false)
+				{
+					ctx.drawImage(this.image, dieSize * side, ypos, dieSize, dieSize, whereX, whereY, dieSize, dieSize);
+				}
+				else
+				{
+					ctx.drawImage(this.imageKeep, whereX - 14, whereY - 14);
+					ctx.drawImage(this.image, dieSize * side, ypos, dieSize, dieSize, whereX, whereY, dieSize, dieSize);
+				}
+			};
 		}
-		else
-		{
-			ctx.drawImage(imgDiceKeep, whereX - 14, whereY - 14);
-			ctx.drawImage(imgDice, dieSize * side, ypos, dieSize, dieSize, whereX, whereY, dieSize, dieSize);
-		}
-	};
+	}
 }
 
 function RollDice(tumble)

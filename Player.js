@@ -6,33 +6,14 @@ function SetupMonsters()
 		monsters[i] = new function Monster()
 		{
 			this.name = characters[i];
-			this.headImage = imgMonsterHeads;
-			this.fullImage = imgMonstersFull;
+			this.headImage = imageLoader.GetImage('monsterHeads');;
+			this.fullImage = imageLoader.GetImage('monstersFull');
 			this.headStart = headX;
 			this.fullStart = fullX;
 			this.fullOffset = fullWH / 2;
 		};
 		headX += headWH;
 		fullX += fullWH;
-	}
-}
-
-function PlayerSelect(whichPlayer)
-{
-	// players select a character until all players are setup
-	if (whichPlayer <= playerCount)
-	{
-		homeScreen = false;
-		playerSelectScreen = true;
-		WriteStroke(`Player ${whichPlayer}, select a character!`,100, 30);
-	}
-	else
-	{
-		playerSelectScreen = false;
-		currentPlayer = 1;
-		// deal the cards
-		ResetCardsOnTable([1,1,1]);
-		gameActive = true;
 	}
 }
 

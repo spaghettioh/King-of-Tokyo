@@ -66,7 +66,7 @@ function BulkImageLoader()
 		return this.images[index].image;
 	}
 	
-	this.GetImageByName = function(name)
+	this.GetImage = function(name)
 	{
 		var img;
 		

@@ -15,19 +15,19 @@ var stageWidth = 800;
 var stageHeight = 480;
 var stageCenterXY = [stageWidth / 2, stageHeight / 2];
 var canvas;
-var imgLoader;
+var mouseX = 0, mouseY = 0;
+var imageLoader;
 
 // GAMEPLAY
-// ============== CAREFUL: Monster order is relative to image position
+var isHomeScreen = false;
+var isPlayerSelectScreen = false;
+var isGameActive = false;
+var isGameOver = false;
+
 var tokyoOccupiedBy = 0;
-var homeScreen = false;
-var playerSelectScreen = false;
-var gameActive = false;
-var gameOver = false;
 var ticker = [];
 var tickerX = 800;
 var tickerStream = '';
-var imgGameOver;
 
 // CARDS
 var shuffledDeck = [];
@@ -36,6 +36,7 @@ var cardsOut = [];
 var tableCardsPreview = false;
 
 // PLAYERS
+// ============== CAREFUL: Monster order is relative to image position
 var characters = ['Alien', 'Cyber Bunny', 'Gigazaur', 'Kraken', 'Dragon', 'King'];
 var monsters = [];
 var iconWH = 130;
@@ -49,8 +50,6 @@ var playerCount;
 var players = [];
 var currentPlayer;
 var deadPlayers = 0;
-var imgMonstersFull;
-var imgMonsterHeads;
 
 // GLOBAL STATS
 var totalResolvedDice = [0, 0, 0, 0, 0, 0];
@@ -88,42 +87,44 @@ window.onload = preloadImages;
 
 function preloadImages()
 {
-	imgLoader = new BulkImageLoader();
-	imgLoader.AddImage('assets/cards.png', 'cards');
-	imgLoader.AddImage('assets/dice.png', 'dice');
-	imgLoader.AddImage('assets/diceKeep.png', 'diceKeep');
-	imgLoader.AddImage('assets/monsterHeads.png', 'monsterHeads');
-	imgLoader.AddImage('assets/monstersFull.png', 'monstersFull');
-	imgLoader.AddImage('assets/cover.png', 'cover');
-	imgLoader.AddImage('assets/playerSelect.png', 'playerSelect');
-	imgLoader.AddImage('assets/gameBoard.png', 'gameBoard');
-	imgLoader.AddImage('assets/gameOver.png', 'gameOver');
-	imgLoader.OnReadyCallback = Start;
-	imgLoader.LoadImages();
+	imageLoader = new BulkImageLoader();
+	let images = [
+		'cards', 'dice', 'diceKeep',
+		'monsterHeads', 'monstersFull',
+		'cover', 'playerSelect', 'gameBoard', 'gameOver'
+		];
+	for (let image in images)
+	{
+		imageLoader.AddImage(`assets/${images[image]}.png`, `${images[image]}`);
+	}
+	// call Start() when done assigning images
+	imageLoader.OnReadyCallback = Start;
+	imageLoader.LoadImages();
 }
 
 function Start()
 {
-	imgCards = imgLoader.GetImageByName('cards');
-	imgDice = imgLoader.GetImageByName('dice');
-	imgDiceKeep = imgLoader.GetImageByName('diceKeep');
-	imgMonsterHeads = imgLoader.GetImageByName('monsterHeads');
-	imgMonstersFull = imgLoader.GetImageByName('monstersFull');
-	imgCover = imgLoader.GetImageByName('cover');
-	imgPlayerSelect = imgLoader.GetImageByName('playerSelect');
-	imgGameBoard = imgLoader.GetImageByName('gameBoard');
-	imgGameOver = imgLoader.GetImageByName('gameOver');
-
+	// HTML stuff
 	canvas = document.getElementById('game');
 	canvas.style.width = stageWidth;
 	canvas.style.height = stageHeight;
-	canvas.addEventListener('click', MouseClicked, false);
-	canvas.addEventListener('mousemove', MouseMoved, false);
-	addEventListener('keydown', KeyPressed, false);
-
 	ctx = canvas.getContext('2d');
 	ctx.canvas.width = stageWidth;
 	ctx.canvas.height = stageHeight;
+	canvas.addEventListener('mousemove', function(e) 
+		{
+			mouseX = e.pageX - canvas.offsetLeft;
+			mouseY = e.pageY - canvas.offsetTop;
+			if (ctx.isPointInPath(mouseX, mouseY))
+			{
+				e.target.style.cursor = 'pointer';
+				return;
+			}
+			e.target.style.cursor = 'default';
+		}, false);
+	canvas.addEventListener('click', MouseClicked, false);
+	addEventListener('keydown', KeyPressed, false);
+
 	ctx.fillStyle = '#FFFFFF';
 	ctx.font = '20px \'GOODGIRL\'';
 	ctx.textBaseline = 'top';
@@ -133,7 +134,7 @@ function Start()
 	SetupMonsters();
 
 	// Kick off update at the homescreen
-	homeScreen = true;
+	isHomeScreen = true;
 	setInterval(function()
 	{
 		Update();
@@ -143,31 +144,22 @@ function Start()
 
 
 function Update() {
-	tickerX += 10;
 	ctx.clearRect(0, 0, stageWidth, stageHeight);
 
-	if (homeScreen)
+	if (isHomeScreen)
 	{
-		ctx.drawImage(imgCover, 0, 0);
-		// draw paths over player selection for hover
-		ctx.beginPath();
-		ctx.rect(444, 380, 44, 60);
-		ctx.rect(558, 380, 40, 60);
-		ctx.rect(670, 380, 40, 60);
+		HomeScreen.Update();
 	}
 
-	if (playerSelectScreen)
+	if (isPlayerSelectScreen)
 	{
-		ctx.drawImage(imgPlayerSelect, 0, 0);
-		// draw paths over characters for hover
-		ctx.beginPath();
-		ctx.rect(0, 100, 800, 265);
-		PlayerSelect(currentPlayer);
+		PlayerSelectScreen.Update();
 	}
 
-	if (gameActive)
+	if (isGameActive)
 	{
-		ctx.drawImage(imgGameBoard, 0, 0);
+		tickerX += 10;
+		ctx.drawImage(imageLoader.GetImage('gameBoard'), 0, 0);
 
 		// draw players and their stats
 		for (var p in players)
@@ -238,14 +230,14 @@ function Update() {
 
 		// draw game over and stats
 		// keeping inside gameActive to show dimmed background
-		if (gameOver)
+		if (isGameOver)
 		{
 			// click anywhere
 			ctx.beginPath();
 			ctx.rect(0, 0, stageWidth, stageHeight);
 
 			// cover board to darken background
-			ctx.drawImage(imgGameOver,0,0);
+			ctx.drawImage(imageLoader.GetImage('gameOver'),0,0);
 
 			// game over message
 			WriteStroke(gameOverMessage,20,20);
@@ -322,7 +314,7 @@ function UpdateStats()
 	}
 	if (deadPlayers == playerCount)
 	{
-		gameOver = true;
+		isGameOver = true;
 		gameOverMessage = `GAME OVER!\n
 			All players died!? I don't even...`;
 	}
@@ -332,7 +324,7 @@ function UpdateStats()
 
 function GameOverScreen(reason)
 {
-	gameOver = true;
+	isGameOver = true;
 
 }
 

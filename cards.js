@@ -5,7 +5,6 @@ http://www.spaghettioh.com
 King of Tokyo Copyright Richard Garfield and Iello Games
 ****************************************/
 
-var imgCards;
 var cardSizeWidth = 300;
 var cardSizeHeight = 415;
 
@@ -114,6 +113,7 @@ function Card(card)
 	this.column = card[4];
 	this.row = card[5];
 	this.owner = 0;
+	this.image = 
 	this.Draw = function Draw(size, whereX, whereY)
 	{
 		// subtracting dimensions to start at 0 column and 0 row
@@ -136,7 +136,7 @@ function Card(card)
 		}
 		
 		// draw the card!
-		ctx.drawImage(imgCards, column, row, cardSizeWidth, cardSizeHeight, whereX, whereY, tempSizeWidth, tempSizeHeight);
+		ctx.drawImage(imageLoader.GetImage('cards'), column, row, cardSizeWidth, cardSizeHeight, whereX, whereY, tempSizeWidth, tempSizeHeight);
 	};
 }
 
