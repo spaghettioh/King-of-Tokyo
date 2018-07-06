@@ -1,120 +1,135 @@
-function MouseClicked(e)
+function MouseMoved (e) 
 {
-	var mouseX = e.pageX - canvas.offsetLeft;
-	var mouseY = e.pageY - canvas.offsetTop;
-	
-	// Four players max for now
-	// homescreen player selection
-	if (isHomeScreen)
+	mouseX = e.pageX - canvas.offsetLeft;
+	mouseY = e.pageY - canvas.offsetTop;
+	if (ctx.isPointInPath(mouseX, mouseY))
 	{
-		// two 444, 380, 488, 440
-		if (mouseX >= 444 && mouseX <= 488 && mouseY >= 380 && mouseY < 440)
-		{
-			playerCount = 2;
-			PlayerSelect(currentPlayer = 1);
-		}
-		// three 558, 380, 598, 446
-		else if (mouseX >= 558 && mouseX <= 598 && mouseY >= 380 && mouseY < 446)
-		{
-			playerCount = 3;
-			PlayerSelect(currentPlayer = 1);
-		}
-		// four 670, 380, 710, 446
-		else if (mouseX >= 670 && mouseX <= 710 && mouseY >= 380 && mouseY < 446)
-		{
-			playerCount = 4;
-			PlayerSelect(currentPlayer = 1);
-		}
+		e.target.style.cursor = 'pointer';
+		return;
 	}
+	e.target.style.cursor = 'default';
+}
+
+function MouseClicked (e)
+{
+	mouseX = e.pageX - canvas.offsetLeft;
+	mouseY = e.pageY - canvas.offsetTop;
+	new buttonMap[`${mouseX},${mouseY}`];
 	
-	if (isPlayerSelectScreen)
-	{
-		if (mouseY >= 100 && mouseY <= 365)
-		{
-			if (mouseX >= 0 && mouseX <= stageWidth / 6)
-			{
-				players[currentPlayer] = new Player(characters[0]);
-				currentPlayer++;
-				PlayerSelect(currentPlayer);
-			}
-			else if (mouseX >= stageWidth / 6 && mouseX <= (stageWidth / 6) * 2)
-			{
-				players[currentPlayer] = new Player(characters[1]);
-				currentPlayer++;
-				PlayerSelect(currentPlayer);
-			}
-			else if (mouseX >= (stageWidth / 6) * 2 && mouseX <= (stageWidth / 6) * 3)
-			{
-				players[currentPlayer] = new Player(characters[2]);
-				currentPlayer++;
-				PlayerSelect(currentPlayer);
-			}
-			else if (mouseX >= (stageWidth / 6) * 3 && mouseX <= (stageWidth / 6) * 4)
-			{
-				players[currentPlayer] = new Player(characters[3]);
-				currentPlayer++;
-				PlayerSelect(currentPlayer);
-			}
-			else if (mouseX >= (stageWidth / 6) * 4 && mouseX <= (stageWidth / 6) * 5)
-			{
-				players[currentPlayer] = new Player(characters[4]);
-				currentPlayer++;
-				PlayerSelect(currentPlayer);
-			}
-			else if (mouseX >= (stageWidth / 6) * 5 && mouseX <= stageWidth)
-			{
-				players[currentPlayer] = new Player(characters[5]);
-				currentPlayer++;
-				PlayerSelect(currentPlayer);
-			}
-		}
-	}
-	
-	// if (gameActive)
+
+
+	// // Four players max for now
+	// // homescreen player selection
+	// if (isHomeScreen)
 	// {
-	// 	if (tableCardsPreview == false && mouseY > 440 && mouseX > 170 && mouseX < 630)
+	// 	// // two 444, 380, 488, 440
+	// 	// if (mouseX >= 444 && mouseX <= 488 && mouseY >= 380 && mouseY < 440)
+	// 	// {
+	// 	// 	playerCount = 2;
+	// 	// 	PlayerSelect(currentPlayer = 1);
+	// 	// }
+	// 	// // three 558, 380, 598, 446
+	// 	// else if (mouseX >= 558 && mouseX <= 598 && mouseY >= 380 && mouseY < 446)
+	// 	// {
+	// 	// 	playerCount = 3;
+	// 	// 	PlayerSelect(currentPlayer = 1);
+	// 	// }
+	// 	// // four 670, 380, 710, 446
+	// 	// else if (mouseX >= 670 && mouseX <= 710 && mouseY >= 380 && mouseY < 446)
+	// 	// {
+	// 	// 	playerCount = 4;
+	// 	// 	PlayerSelect(currentPlayer = 1);
+	// 	// }
+	// }
+	
+	// if (isPlayerSelectScreen)
+	// {
+	// 	if (mouseY >= 100 && mouseY <= 365)
 	// 	{
-	// 		tableCardsPreview = true;
-	// 	}
-	// 	else if (tableCardsPreview == true)
-	// 	{
-	// 		if (mouseY > 480 - (cardSizeHeight / 2.2))
+	// 		if (mouseX >= 0 && mouseX <= stageWidth / 6)
 	// 		{
-	// 			// first card
-	// 			if (mouseX > 170 && mouseX < 170 + (cardSizeWidth * 2.2))
-	// 			{
-	// 				console.log('trying to buy first card');
-	// 			}
-	// 			else if (mouseX > 170 + (cardSizeWidth * 2.2) && mouseX < 170 + (cardSizeWidth * 2.2 * 2))
-	// 			{
-	// 				console.log('trying to buy second card');
-	// 			}
-	// 			else if (mouseX > 170 + (cardSizeWidth * 2.2 * 2) && mouseX < 630)
-	// 			{
-	// 				console.log('trying to buy third card');
-	// 			}
+	// 			players[currentPlayer] = new Player(characters[0]);
+	// 			currentPlayer++;
+	// 			PlayerSelect(currentPlayer);
 	// 		}
-	// 	}
-	// 	else
-	// 	{
-	// 		tableCardsPreview = false;
+	// 		else if (mouseX >= stageWidth / 6 && mouseX <= (stageWidth / 6) * 2)
+	// 		{
+	// 			players[currentPlayer] = new Player(characters[1]);
+	// 			currentPlayer++;
+	// 			PlayerSelect(currentPlayer);
+	// 		}
+	// 		else if (mouseX >= (stageWidth / 6) * 2 && mouseX <= (stageWidth / 6) * 3)
+	// 		{
+	// 			players[currentPlayer] = new Player(characters[2]);
+	// 			currentPlayer++;
+	// 			PlayerSelect(currentPlayer);
+	// 		}
+	// 		else if (mouseX >= (stageWidth / 6) * 3 && mouseX <= (stageWidth / 6) * 4)
+	// 		{
+	// 			players[currentPlayer] = new Player(characters[3]);
+	// 			currentPlayer++;
+	// 			PlayerSelect(currentPlayer);
+	// 		}
+	// 		else if (mouseX >= (stageWidth / 6) * 4 && mouseX <= (stageWidth / 6) * 5)
+	// 		{
+	// 			players[currentPlayer] = new Player(characters[4]);
+	// 			currentPlayer++;
+	// 			PlayerSelect(currentPlayer);
+	// 		}
+	// 		else if (mouseX >= (stageWidth / 6) * 5 && mouseX <= stageWidth)
+	// 		{
+	// 			players[currentPlayer] = new Player(characters[5]);
+	// 			currentPlayer++;
+	// 			PlayerSelect(currentPlayer);
+	// 		}
 	// 	}
 	// }
 	
-	if (isGameOver)
-	{
-		if (ctx.isPointInPath(mouseX, mouseY)) 
-		{
-			location.reload();
-		}
-	}
+	// // if (gameActive)
+	// // {
+	// // 	if (tableCardsPreview == false && mouseY > 440 && mouseX > 170 && mouseX < 630)
+	// // 	{
+	// // 		tableCardsPreview = true;
+	// // 	}
+	// // 	else if (tableCardsPreview == true)
+	// // 	{
+	// // 		if (mouseY > 480 - (cardSizeHeight / 2.2))
+	// // 		{
+	// // 			// first card
+	// // 			if (mouseX > 170 && mouseX < 170 + (cardSizeWidth * 2.2))
+	// // 			{
+	// // 				console.log('trying to buy first card');
+	// // 			}
+	// // 			else if (mouseX > 170 + (cardSizeWidth * 2.2) && mouseX < 170 + (cardSizeWidth * 2.2 * 2))
+	// // 			{
+	// // 				console.log('trying to buy second card');
+	// // 			}
+	// // 			else if (mouseX > 170 + (cardSizeWidth * 2.2 * 2) && mouseX < 630)
+	// // 			{
+	// // 				console.log('trying to buy third card');
+	// // 			}
+	// // 		}
+	// // 	}
+	// // 	else
+	// // 	{
+	// // 		tableCardsPreview = false;
+	// // 	}
+	// // }
+	
+	// if (isGameOver)
+	// {
+	// 	if (ctx.isPointInPath(mouseX, mouseY)) 
+	// 	{
+	// 		location.reload();
+	// 	}
+	// }
 }
 
 
         
 function KeyPressed(e)
 {
-	if (isGameActive && !isGameOver)
+	if (isGameActiveScreen && !isGameOver)
 	{
 		switch (e.keyCode)
 		{

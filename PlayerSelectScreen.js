@@ -1,30 +1,39 @@
 var PlayerSelectScreen = new function ()
 {
+	this.Start = function (numberOfPlayers)
+	{
+		// clear the button map
+		buttonMap = {'Current screen': 'Player select'};
+		buttons = {};
+		isHomeScreen = false;
+		// update global variable
+		playerCount = numberOfPlayers;
+
+		characters.forEach( function(character, i)
+		{
+			let width = Math.round(stageWidth / characters.length);
+			// add a button based on the number 
+			new Button(`${character}`, i * width, 100, width, 265, function ()
+			{
+				players[currentPlayer] = new Player(character);
+				currentPlayer++;
+			});
+		});
+		
+		isPlayerSelectScreen = true;
+		currentPlayer = 1;
+	}
 	this.Update = function ()
 	{
 		ctx.drawImage(imageLoader.GetImage('playerSelect'), 0, 0);
-		// draw paths over characters for hover
-		ctx.beginPath();
-		ctx.rect(0, 100, 800, 265);
-		PlayerSelect(currentPlayer);
-	}
-}
-
-function PlayerSelect(whichPlayer)
-{
-	// players select a character until all players are setup
-	if (whichPlayer <= playerCount)
-	{
-		isHomeScreen = false;
-		isPlayerSelectScreen = true;
-		WriteStroke(`Player ${whichPlayer}, select a character!`,100, 30);
-	}
-	else
-	{
-		isPlayerSelectScreen = false;
-		currentPlayer = 1;
-		// deal the cards
-		ResetCardsOnTable([1,1,1]);
-		isGameActive = true;
+		// players select a character until all players are setup
+		if (currentPlayer <= playerCount)
+		{
+			WriteStroke(`Player ${currentPlayer}, select a character!`,100, 30);
+		}
+		else
+		{
+			GameActiveScreen.Start();
+		}
 	}
 }

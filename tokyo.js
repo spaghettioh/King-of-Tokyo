@@ -21,8 +21,31 @@ var imageLoader;
 // GAMEPLAY
 var isHomeScreen = false;
 var isPlayerSelectScreen = false;
-var isGameActive = false;
+var isGameActiveScreen = false;
 var isGameOver = false;
+
+var buttonMap = {};
+var buttons = {};
+// var buttonsHomeScreen = {
+// 	'2 players': new Button([444, 380, 44, 60], function ()
+// 		{
+// 			playerCount = 2;
+// 			PlayerSelect(currentPlayer = 1);
+// 		}),
+// 	'3 players': '',
+// 	'4 players': ''
+// };
+// var buttonsPlayerSelectScreen = {
+// 	'Alien': '',
+// 	'Cyber Bunny': '',
+// 	'Gigazaur': '',
+// 	'Kraken': '',
+// 	'Dragon': '',
+// 	'King': ''
+// };
+// var buttonsGameActiveScreen = {
+// 	'roll dice': ''
+// };
 
 var tokyoOccupiedBy = 0;
 var ticker = [];
@@ -91,17 +114,7 @@ function Start()
 	ctx = canvas.getContext('2d');
 	ctx.canvas.width = stageWidth;
 	ctx.canvas.height = stageHeight;
-	canvas.addEventListener('mousemove', function(e) 
-	{
-		mouseX = e.pageX - canvas.offsetLeft;
-		mouseY = e.pageY - canvas.offsetTop;
-		if (ctx.isPointInPath(mouseX, mouseY))
-		{
-			e.target.style.cursor = 'pointer';
-			return;
-		}
-		e.target.style.cursor = 'default';
-	}, false);
+	canvas.addEventListener('mousemove', MouseMoved, false);
 	canvas.addEventListener('click', MouseClicked, false);
 	addEventListener('keydown', KeyPressed, false);
 
@@ -109,12 +122,24 @@ function Start()
 	ctx.font = '20px \'GOODGIRL\'';
 	ctx.textBaseline = 'top';
 
+	buttonsPlayerSelectScreen = {
+		'Alien': '',
+		'Cyber Bunny': '',
+		'Gigazaur': '',
+		'Kraken': '',
+		'Dragon': '',
+		'King': ''
+	};
+	buttonsGameActiveScreen = {
+		'roll dice': ''
+	};
+
 	SetupDice();
 	SetupDeck();
 	SetupMonsters();
 
-	// Kick off update at the homescreen
-	isHomeScreen = true;
+	HomeScreen.Start();
+
 	setInterval(function()
 	{
 		Update();
@@ -125,20 +150,48 @@ function Start()
 
 function Update() {
 	ctx.clearRect(0, 0, stageWidth, stageHeight);
-
+	
 	if (isHomeScreen)
 	{
 		HomeScreen.Update();
 	}
-
-	if (isPlayerSelectScreen)
+	else if (isPlayerSelectScreen)
 	{
 		PlayerSelectScreen.Update();
 	}
-
-	if (isGameActive)
+	else if (isGameActiveScreen)
 	{
 		GameActiveScreen.Update();
+	}
+
+	// draw all the buttons for that screen
+	for (let btn in buttons)
+	{
+		ctx.beginPath();
+		ctx.rect(buttons[`${btn}`].x, buttons[`${btn}`].y, buttons[`${btn}`].w, buttons[`${btn}`].h);
+	}
+	// buttons.forEach( function(btn)
+	// {
+	// 	ctx.rect(btn.x, btn.y, btn.w, btn.h);
+	// });
+}
+
+function Button (name, startX, startY, w, h, action)
+{
+	buttons[`${name}`] = {
+		x: startX,
+		y: startY,
+		w: w,
+		h: h
+	}
+
+	for (let x = startX; x < (startX + w); x++)
+	{
+		for (let y = startY; y < startY + h; y++)
+		{
+			// add the coordinates and action to the buttonMap
+			buttonMap[`${x},${y}`] = action;
+		}
 	}
 }
 
