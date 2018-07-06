@@ -2,11 +2,12 @@ var HomeScreen = new function ()
 {
 	this.Start = function ()
 	{
-		// clear the button map and reset
+		// clear the button stuff and update params
 		buttonMap = {'Current screen': 'Home screen'};
 		buttons = {};
-
+		isGameActiveScreen = false; // for game over reset
 		isHomeScreen = true;
+
 		// add buttons for number of players
 		new Button('2 players', 444, 380, 44, 60, function ()
 		{

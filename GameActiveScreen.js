@@ -2,14 +2,15 @@ var GameActiveScreen = new function ()
 {
 	this.Start = function ()
 	{
+		// clear the button stuff and update params
 		buttonMap = {'Current screen': 'Game active'};
 		buttons = {};
-
 		isPlayerSelectScreen = false;
-		currentPlayer = 1;
-		// deal the cards
-		ResetCardsOnTable([1,1,1]);
 		isGameActiveScreen = true;
+
+		// player 1 starts, deal cards to buy
+		currentPlayer = 1;
+		ResetCardsOnTable([1,1,1]);
 	}
 	this.Update = function ()
 	{

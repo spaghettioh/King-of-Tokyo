@@ -150,7 +150,7 @@ function Start()
 
 function Update() {
 	ctx.clearRect(0, 0, stageWidth, stageHeight);
-	
+
 	if (isHomeScreen)
 	{
 		HomeScreen.Update();
@@ -164,16 +164,12 @@ function Update() {
 		GameActiveScreen.Update();
 	}
 
-	// draw all the buttons for that screen
-	for (let btn in buttons)
-	{
-		ctx.beginPath();
-		ctx.rect(buttons[`${btn}`].x, buttons[`${btn}`].y, buttons[`${btn}`].w, buttons[`${btn}`].h);
-	}
-	// buttons.forEach( function(btn)
+	// // draw all the buttons for that screen
+	// for (var btn in buttons)
 	// {
-	// 	ctx.rect(btn.x, btn.y, btn.w, btn.h);
-	// });
+	// 	ctx.beginPath();
+	// 	ctx.rect(buttons[btn].x, buttons[btn].y, buttons[btn].w, buttons[btn].h);
+	// }
 }
 
 function Button (name, startX, startY, w, h, action)

@@ -2,21 +2,27 @@ function MouseMoved (e)
 {
 	mouseX = e.pageX - canvas.offsetLeft;
 	mouseY = e.pageY - canvas.offsetTop;
-	if (ctx.isPointInPath(mouseX, mouseY))
+	// use buttonMap to change the mouse cursor
+	if (buttonMap[`${mouseX},${mouseY}`])
 	{
 		e.target.style.cursor = 'pointer';
 		return;
 	}
-	e.target.style.cursor = 'default';
+	else
+	{
+		e.target.style.cursor = 'default';
+	}
 }
 
 function MouseClicked (e)
 {
 	mouseX = e.pageX - canvas.offsetLeft;
 	mouseY = e.pageY - canvas.offsetTop;
-	new buttonMap[`${mouseX},${mouseY}`];
+	if (buttonMap[`${mouseX},${mouseY}`])
+	{
+		new buttonMap[`${mouseX},${mouseY}`];
+	}
 	
-
 
 	// // Four players max for now
 	// // homescreen player selection
