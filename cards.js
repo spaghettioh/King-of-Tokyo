@@ -7,6 +7,10 @@ King of Tokyo Copyright Richard Garfield and Iello Games
 
 var cardSizeWidth = 300;
 var cardSizeHeight = 415;
+var cardsPreview = false;
+var shuffledDeck = [];
+var cardsOnTable = [];
+var cardsOut = [];
 
 var cards = [
 // ==================
@@ -160,10 +164,16 @@ function ResetCardsOnTable(cardsToReset,playerWiped)
 			if (cardsOnTable[card] != undefined) {shuffledDeck.push(cardsOnTable[card])}
 			cardsOnTable[card] = GetNewCard();
 		}
+
+		let cardX = 170 + (480 / 3 * card);
+		new Button(cardsOnTable[card].name, cardX, stageHeight - (cardSizeHeight / 2.2), 170, 265, function ()
+			{
+				cardsPreview = true;
+			});
 	}
 	
 	// costs 2 energy to wipe
-	if (playerWiped != undefined)
+	if (playerWiped !== undefined)
 	{
 		players[currentPlayer].energy -= 2;
 		UpdateStats();

@@ -27,9 +27,9 @@ var GameActiveScreen = new function ()
 
 		cardsOnTable.forEach( function(card, pos)
 		{
-			var cardX = 170 + (480 / 3 * pos);
+			let cardX = 170 + (480 / 3 * pos);
 
-			if (tableCardsPreview)
+			if (cardsPreview)
 			{
 				card.Draw('big', cardX, 480 - (cardSizeHeight / 2.2));
 			}
@@ -41,7 +41,7 @@ var GameActiveScreen = new function ()
 
 		// draw paths over cardsOnTable for hover
 		ctx.beginPath();
-		if (tableCardsPreview)
+		if (cardsPreview)
 		{
 			ctx.rect(170, stageHeight - (cardSizeHeight / 2.2), 460, (cardSizeHeight / 2.2));
 		}

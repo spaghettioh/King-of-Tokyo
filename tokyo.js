@@ -52,11 +52,6 @@ var ticker = [];
 var tickerX = 800;
 var tickerStream = '';
 
-// CARDS
-var shuffledDeck = [];
-var cardsOnTable = [];
-var cardsOut = [];
-var tableCardsPreview = false;
 
 // PLAYERS
 // ============== CAREFUL: Monster order is relative to image position
@@ -88,7 +83,7 @@ window.onload = preloadImages;
 // notification() flickering
 // notification clearing game over screen
 
-function preloadImages()
+function preloadImages ()
 {
 	imageLoader = new BulkImageLoader();
 	let images = [
@@ -105,7 +100,7 @@ function preloadImages()
 	imageLoader.LoadImages();
 }
 
-function Start()
+function Start ()
 {
 	// HTML stuff
 	canvas = document.getElementById('game');
@@ -148,7 +143,7 @@ function Start()
 
 
 
-function Update() {
+function Update () {
 	ctx.clearRect(0, 0, stageWidth, stageHeight);
 
 	if (isHomeScreen)
@@ -191,7 +186,7 @@ function Button (name, startX, startY, w, h, action)
 	}
 }
 
-function WriteStroke(text,x,y)
+function WriteStroke (text,x,y)
 {
 	let gradient;
 
@@ -207,4 +202,9 @@ function WriteStroke(text,x,y)
 	gradient.addColorStop('1.0','#FFFFFF');
 	ctx.fillStyle = gradient;
 	ctx.fillText(text, x, y);
+}
+
+function Tween (target)
+{
+
 }
