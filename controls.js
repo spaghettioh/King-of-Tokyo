@@ -6,6 +6,10 @@ function MouseMoved (e)
 	if (buttonMap[`${mouseX},${mouseY}`])
 	{
 		e.target.style.cursor = 'pointer';
+		// if (buttonMap[`${mouseX},${mouseY}`].action == cardsPreview || buttonMap[`${mouseX},${mouseY}`].action != cardsPreview)
+		// {
+		// 	cardsPreview = !cardsPreview;
+		// }
 		return;
 	}
 	else

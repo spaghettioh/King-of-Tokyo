@@ -40,6 +40,7 @@ function Card(card)
 	this.col = (card[4] - 1) * this.colW;
 	this.row = (card[5] - 1) * this.rowH;
 	this.state = 'in deck'; // vs on "on table"
+	this.positionOnTable = 0;
 	this.purchase;
 	this.Draw = function()
 	{
@@ -51,17 +52,28 @@ function Card(card)
 				// this.h = Math.round(this.rowH * 1.5);
 				this.w = Math.round(this.colW * .75);
 				this.h = Math.round(this.rowH * .75);
+				this.x = Math.round([50,
+					(stageWidth * .5) - (this.w * .5),
+					stageWidth - 50 - this.w][this.positionOnTable]);
 				this.y = stageHeight - this.h;
 			}
 			else
 			{
-				this.y = stageHeight * .9;
 				// this.w = Math.round(this.colW * .7);
 				// this.h = Math.round(this.rowH * .7);
 				this.w = Math.round(this.colW * .43);
 				this.h = Math.round(this.rowH * .43);
+				this.x = Math.round([stageWidth * .25,
+					(stageWidth * .5) - (this.w * .5),
+					stageWidth * .75 - this.w][this.positionOnTable]);
+				this.y = stageHeight * .9;
 			}
 		}
+
+		new Button(this.name, this.x, this.y, this.w, this.h, function()
+		{
+			cardsPreview = !cardsPreview;
+		})
 
 		// draw the card!
 		// image, sprite x, sprite y, sprite width, sprite height, where x, where y, width, height 
@@ -79,8 +91,6 @@ function GetNewCard()
 
 function DealCards(arrayWhich, playerWiped)
 {
-	let cardX = 200;
-
 	// swap the cards on the table for new cards from the shuffled deck
 	for (let card = 0; card < arrayWhich.length; card++)
 	{
@@ -89,6 +99,8 @@ function DealCards(arrayWhich, playerWiped)
 		{
 			cardsOnTable[card] = GetNewCard();
 			cardsOnTable[card].state = 'on table';
+			cardsOnTable[card].positionOnTable = card;
+			console.log(card);
 			
 			// put swapped card to bottom of deck and get a new one
 			// if (cardsOnTable[card] === undefined) 
@@ -109,8 +121,6 @@ function DealCards(arrayWhich, playerWiped)
 			// );
 			//cardsOnTable[card].state = 'on table';
 		}
-
-		cardX += 190;
 	}
 	
 	// costs 2 energy to wipe
