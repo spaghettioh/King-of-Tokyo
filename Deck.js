@@ -28,39 +28,44 @@ function Card(card)
 	this.type = card[2];
 	this.desc = card[3];
 	this.owner = 0;
-	this.image = imageLoader.GetImage('cards');
+	// this.image = imageLoader.GetImage('cards');
 	this.x = 0;
 	this.y = 0;
 	this.w = 0;
 	this.h = 0;
+	// this.colW = 150;
+	// this.rowH = 207;
 	this.colW = 300;
 	this.rowH = 415;
 	this.col = (card[4] - 1) * this.colW;
 	this.row = (card[5] - 1) * this.rowH;
 	this.state = 'in deck'; // vs on "on table"
 	this.purchase;
-	this.Draw = function(x)
+	this.Draw = function()
 	{
-		this.x = x;
-
 		if (this.state = 'on table')
 		{
 			if (cardsPreview)
 			{
-				this.y = stageHeight - this.rowH;
-				this.w = this.colW;
-				this.h = this.rowH;
+				// this.w = Math.round(this.colW * 1.5);
+				// this.h = Math.round(this.rowH * 1.5);
+				this.w = Math.round(this.colW * .75);
+				this.h = Math.round(this.rowH * .75);
+				this.y = stageHeight - this.h;
 			}
 			else
 			{
 				this.y = stageHeight * .9;
-				this.w = Math.round(this.colW * .4);
-				this.h = this.rowH * .4;
+				// this.w = Math.round(this.colW * .7);
+				// this.h = Math.round(this.rowH * .7);
+				this.w = Math.round(this.colW * .43);
+				this.h = Math.round(this.rowH * .43);
 			}
 		}
-		ctx.drawImage(this.image, this.col, this.row, this.colW, this.rowH, this.x, this.y, this.w, this.h);
+
 		// draw the card!
 		// image, sprite x, sprite y, sprite width, sprite height, where x, where y, width, height 
+		ctx.drawImage(imageLoader.GetImage('cards'), this.col, this.row, this.colW, this.rowH, this.x, this.y, this.w, this.h);
 	};
 }
 
@@ -84,7 +89,6 @@ function DealCards(arrayWhich, playerWiped)
 		{
 			cardsOnTable[card] = GetNewCard();
 			cardsOnTable[card].state = 'on table';
-			console.log(cardsOnTable[card]);
 			
 			// put swapped card to bottom of deck and get a new one
 			// if (cardsOnTable[card] === undefined) 

@@ -24,27 +24,31 @@ var GameActiveScreen = new function ()
 		});
 
 		// draw dealt cards
+		buttonMap = {};
 		cardsOnTable.forEach( function(card, pos)
 		{
-			let cardX = [];
 			if (cardsPreview)
 			{
-				cardX = [100,
-					(stageWidth / 2) - (card.w / 2),
-					stageWidth - 100 - card.w];
+				card.x = Math.round(
+					[50,
+					(stageWidth * .5) - (card.w * .5),
+					stageWidth - 50 - card.w][pos]
+					);
 			}
 			else
 			{
-				cardX = [stageWidth / 4,
-					(stageWidth / 2) - (card.w / 2),
-					stageWidth * .6];
+				card.x = Math.round(
+					[stageWidth * .25,
+					(stageWidth * .5) - (card.w * .5),
+					stageWidth * .75 - card.w][pos]
+					);
 			}
-
-			new Button(card.name, cardX[pos], card.y, card.w, card.h, function()
+			new Button(card.name, card.x, card.y, card.w, card.h, function()
 			{
 				cardsPreview = !cardsPreview;
 			})
-			card.Draw(cardX[pos]);
+
+			card.Draw();
 		});
 
 		PlayerTurn();

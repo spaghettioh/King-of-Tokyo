@@ -158,13 +158,6 @@ function Update () {
 	{
 		GameActiveScreen.Update();
 	}
-
-	// // draw all the buttons for that screen
-	// for (var btn in buttons)
-	// {
-	// 	ctx.beginPath();
-	// 	ctx.rect(buttons[btn].x, buttons[btn].y, buttons[btn].w, buttons[btn].h);
-	// }
 }
 
 function Button (name, startX, startY, w, h, action)
