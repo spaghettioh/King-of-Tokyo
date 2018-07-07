@@ -1,4 +1,3 @@
-
 function SetupDeck()
 {
 	let deck = [];
@@ -9,9 +8,9 @@ function SetupDeck()
 		deck[i] = new Card(cards[i]);
 	}
 	// now shuffle it
-	// grab a random card, check see if in shuffled deck already before adding, until all cards are in the shuffled deck
 	for (let i; shuffledDeck.length < deck.length; i++)
 	{
+		// grab a random card, check see if in shuffled deck already before adding, until all cards are in the shuffled deck
 		let randomCard = Math.floor(Math.random() * deck.length);
 		
 		if (shuffledDeck.indexOf(deck[randomCard]) === -1)
@@ -28,33 +27,40 @@ function Card(card)
 	this.cost = card[1];
 	this.type = card[2];
 	this.desc = card[3];
-	this.column = card[4];
-	this.row = card[5];
 	this.owner = 0;
-	this.image;
-	this.Draw = function Draw(size, whereX, whereY)
+	this.image = imageLoader.GetImage('cards');
+	this.x = 0;
+	this.y = 0;
+	this.w = 0;
+	this.h = 0;
+	this.colW = 300;
+	this.rowH = 415;
+	this.col = (card[4] - 1) * this.colW;
+	this.row = (card[5] - 1) * this.rowH;
+	this.state = 'in deck'; // vs on "on table"
+	this.purchase;
+	this.Draw = function(x)
 	{
-		// subtracting dimensions to start at 0 column and 0 row
-		// (column*width)-width = actual column
-		let column = (this.column - 1) * cardSizeWidth;
-		let row = (this.row - 1) * cardSizeHeight;
-		// assigning temp vals in case they get drawn somewhere on accident
-		let tempSizeWidth = 10;
-		let tempSizeHeight = 10;
-		
-		if (size == 'big')
+		this.x = x;
+
+		if (this.state = 'on table')
 		{
-			tempSizeWidth = cardSizeWidth / 2.2;
-			tempSizeHeight = cardSizeHeight / 2.2;
+			if (cardsPreview)
+			{
+				this.y = stageHeight - this.rowH;
+				this.w = this.colW;
+				this.h = this.rowH;
+			}
+			else
+			{
+				this.y = stageHeight * .9;
+				this.w = Math.round(this.colW * .4);
+				this.h = this.rowH * .4;
+			}
 		}
-		else if (size == 'small')
-		{
-			tempSizeWidth = cardSizeWidth / 7;
-			tempSizeHeight = cardSizeHeight / 7;
-		}
-		
+		ctx.drawImage(this.image, this.col, this.row, this.colW, this.rowH, this.x, this.y, this.w, this.h);
 		// draw the card!
-		ctx.drawImage(imageLoader.GetImage('cards'), column, row, cardSizeWidth, cardSizeHeight, whereX, whereY, tempSizeWidth, tempSizeHeight);
+		// image, sprite x, sprite y, sprite width, sprite height, where x, where y, width, height 
 	};
 }
 
@@ -66,34 +72,47 @@ function GetNewCard()
 	return card;
 }
 
-function ResetCardsOnTable(cardsToReset,playerWiped)
+function DealCards(arrayWhich, playerWiped)
 {
 	let cardX = 200;
 
-	for (let card = 0; card < cardsToReset.length; card++)
+	// swap the cards on the table for new cards from the shuffled deck
+	for (let card = 0; card < arrayWhich.length; card++)
 	{
-		// card slot will be 1 for reset E.G. [0, 1, 0]
-		if (cardsToReset[card] === 1)
+		// card to reset will be 1 for reset E.G. [0, 1, 0]
+		if (arrayWhich[card] === true)
 		{
-			// put reset card to bottom of deck and get a new one
-			// undefined is during the initial setup
-			if (cardsOnTable[card] !== undefined) {shuffledDeck.push(cardsOnTable[card])}
 			cardsOnTable[card] = GetNewCard();
+			cardsOnTable[card].state = 'on table';
+			console.log(cardsOnTable[card]);
+			
+			// put swapped card to bottom of deck and get a new one
+			// if (cardsOnTable[card] === undefined) 
+			// {
+			// 	shuffledDeck.push(cardsOnTable[card])
+			// }
+			// 
+			// new Button(
+			// 	cardsOnTable[card].name,
+			// 	cardsOnTable[card].x,
+			// 	Math.round(stageHeight - (cardsOnTable[card].h / 2.2)),
+			// 	170,
+			// 	265,
+			// 	function ()
+			// 	{
+			// 		cardsPreview = !cardsPreview;
+			// 	}
+			// );
+			//cardsOnTable[card].state = 'on table';
 		}
 
-		
-		new Button(cardsOnTable[card].name, cardX, Math.round(stageHeight - (cardSizeHeight / 2.2)), 170, 265, function ()
-			{
-				cardsPreview = !cardsPreview;
-			});
 		cardX += 190;
 	}
 	
 	// costs 2 energy to wipe
-	if (playerWiped !== undefined)
+	if (playerWiped)
 	{
 		players[currentPlayer].energy -= 2;
-		UpdateStats();
 	}
 }
 
@@ -200,7 +219,7 @@ function ShowPlayerCards()
 			// draw the players hand
 			for (var card = 0; card < players[p].cards.length; card++)
 			{
-				players[p].cards[card][1].Draw('small', cardsX, cardsY);
+				players[p].cards[card][1].Draw();
 				cardsX += 15;
 			}
 		}

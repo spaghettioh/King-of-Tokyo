@@ -10,7 +10,7 @@ var GameActiveScreen = new function ()
 
 		// player 1 starts, deal cards to buy
 		currentPlayer = 1;
-		ResetCardsOnTable([1,1,1]);
+		DealCards([true,true,true]);
 	}
 	this.Update = function ()
 	{
@@ -23,32 +23,32 @@ var GameActiveScreen = new function ()
 			player.Draw();
 		});
 
-		PlayerTurn();
-
+		// draw dealt cards
 		cardsOnTable.forEach( function(card, pos)
 		{
-			let cardX = 170 + (480 / 3 * pos);
-
+			let cardX = [];
 			if (cardsPreview)
 			{
-				card.Draw('big', cardX, 480 - (cardSizeHeight / 2.2));
+				cardX = [100,
+					(stageWidth / 2) - (card.w / 2),
+					stageWidth - 100 - card.w];
 			}
 			else
 			{
-				card.Draw('big', cardX, 440);
+				cardX = [stageWidth / 4,
+					(stageWidth / 2) - (card.w / 2),
+					stageWidth * .6];
 			}
+
+			new Button(card.name, cardX[pos], card.y, card.w, card.h, function()
+			{
+				cardsPreview = !cardsPreview;
+			})
+			card.Draw(cardX[pos]);
 		});
 
-		// draw paths over cardsOnTable for hover
-		ctx.beginPath();
-		if (cardsPreview)
-		{
-			ctx.rect(170, stageHeight - (cardSizeHeight / 2.2), 460, (cardSizeHeight / 2.2));
-		}
-		else
-		{
-			ctx.rect(170, 440, 460, 40);
-		}
+		PlayerTurn();
+
 
 		// draw the dice when they are rolled
 		if (rolledDice.length > 0)

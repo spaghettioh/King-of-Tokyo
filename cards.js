@@ -5,8 +5,6 @@ http://www.spaghettioh.com
 King of Tokyo Copyright Richard Garfield and Iello Games
 ****************************************/
 
-var cardSizeWidth = 300;
-var cardSizeHeight = 415;
 var cardsPreview = false;
 var shuffledDeck = [];
 var cardsOnTable = [];
