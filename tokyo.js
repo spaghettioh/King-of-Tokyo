@@ -135,13 +135,8 @@ function Start ()
 
 	HomeScreen.Start();
 
-	setInterval(function()
-	{
-		Update();
-	}, 1000/60);
+	setInterval(Update, 1000/60);
 }
-
-
 
 function Update () {
 	ctx.clearRect(0, 0, stageWidth, stageHeight);
@@ -158,6 +153,8 @@ function Update () {
 	{
 		GameActiveScreen.Update();
 	}
+
+	// Box.Draw();
 }
 
 function Button (name, startX, startY, w, h, action)
@@ -197,7 +194,122 @@ function WriteStroke (text,x,y)
 	ctx.fillText(text, x, y);
 }
 
-function Tween (target)
-{
+// var time;
+// function Tween (obj, props)
+// {
+// 	// props = x, y, w, h, time, callback
+// 	if (!time)
+// 	{
+// 		time = props.time;
+// 	}
+// 	props.time -= 100;
+// 	console.log(props.time);
+// 	console.log(time);
 
-}
+// 	if (props.time > 0)
+// 	{
+// 		obj.x += props.x / time;
+// 		obj.y += props.y / time;
+// 		obj.w += props.w / time;
+// 		obj.h += props.h / time;
+// 		setTimeout(function() {Tween(obj, props)}, time / props.time);
+
+// 	}
+// 	else
+// 	{
+// 		time = 0;
+// 		return props.callback;
+// 	}
+// }
+
+
+// var Box = new function ()
+// {
+// 	this.startingPos = true;
+// 	this.x = 0;
+// 	this.y = 0;
+// 	this.w = 50;
+// 	this.h = 50;
+// 	this.Draw = function ()
+// 	{
+// 		ctx.fillStyle = '#FF0000';
+// 		ctx.fillRect(this.x, this.y, this.w, this.h);
+// 	};
+// }
+
+
+// if (Box.startingPos)
+// {
+// 	Tween(Box, 
+// 	{
+// 		x: stageWidth * .5,
+// 		y: stageHeight * .5,
+// 		w: 300,
+// 		h: 300,
+// 		time: 3000,
+// 		callback: !Box.position
+// 	})
+// }
+
+// function Thing ()
+// {
+// 	var element = document.getElementById('moving');
+// 	var bg = document.getElementById('background');
+
+// 	bg.addEventListener('click', function(evt) {
+// 	  animate({
+// 	    x: evt.offsetX,
+// 	    y: evt.offsetY
+// 	  });
+// 	}, false);
+
+// 	function getPosition() {
+// 	  return {
+// 	    x: element.offsetLeft,
+// 	    y: element.offsetTop
+// 	  };
+// 	}
+// 	function setPosition(x, y) {
+// 	  element.style.left = x + 'px';
+// 	  element.style.top = y + 'px';
+// 	}
+
+// 	function easing(x) {
+// 	  return 0.5 + 0.5 * Math.sin((x - 0.5) * Math.PI);
+// 	}
+
+// 	function animate(target) {
+// 	  var initial = getPosition();
+// 	  var initialX = initial.x;
+// 	  var initialY = initial.y;
+// 	  var targetX = target.x;
+// 	  var targetY = target.y;
+// 	  var deltaX = targetX - initialX;
+// 	  var deltaY = targetY - initialY;
+
+// 	  var timeStart = timestamp();
+// 	  var timeLength = 800;
+
+// 	  var timer = setInterval(update, 10);
+
+// 	  function timestamp() {
+// 	    return Date.now();
+// 	  }
+// 	  function stop() {
+// 	    clearInterval(timer);
+// 	  }
+
+// 	  function update() {
+// 	    var t = (timestamp() - timeStart) / timeLength;
+// 	    if (t > 1) {
+// 	      fraction(1);
+// 	      stop();
+// 	    } else {
+// 	      fraction(easing(t));
+// 	    }
+// 	  }
+// 	  function fraction(t) {
+// 	    setPosition(initialX + t * deltaX, initialY + t * deltaY);
+// 	  }
+// 	}
+// }
