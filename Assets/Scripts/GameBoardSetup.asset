@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1893448595, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
+  m_Name: GameBoardSetup
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"graph":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"pan":{"x":143.0,"y":46.0},"zoom":1.0,"elements":[{"specifyFallback":false,"kind":"Application","defaultValues":{"name":{"$content":"NumberOfPlayers","$type":"System.String"}},"position":{"x":4.0,"y":-96.0},"guid":"9d679de9-9e17-4e5c-a5b3-531bcd63c3b2","$version":"A","$type":"Bolt.GetVariable"},{"specifyFallback":false,"kind":"Application","defaultValues":{"name":{"$content":"Current
+      Player","$type":"System.String"}},"position":{"x":-16.0,"y":97.0},"guid":"45cfeaf3-4f69-4aec-899a-831381bfd7cb","$version":"A","$type":"Bolt.GetVariable"},{"defaultValues":{},"position":{"x":-255.0,"y":-157.0},"guid":"87e23e53-8271-4a84-b2b1-c95bae205c6e","$version":"A","$type":"Bolt.Start"},{"defaultValues":{},"position":{"x":-227.0,"y":105.0},"guid":"c56d006a-34d1-448c-bb1e-eb70ba9c7573","$version":"A","$type":"Bolt.Update"}],"title":null,"summary":null,"$version":"A"}}'
+    _objectReferences: []
