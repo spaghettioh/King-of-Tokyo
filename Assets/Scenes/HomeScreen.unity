@@ -156,6 +156,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 61422428}
     m_Modifications:
+    - target: {fileID: 114296116084312096, guid: 8e4f8a1ede1864877bdf59b86a5bffe1,
+        type: 2}
+      propertyPath: _data._objectReferences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224657369250251166, guid: 8e4f8a1ede1864877bdf59b86a5bffe1,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -264,6 +269,17 @@ Prefab:
       propertyPath: m_Name
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114296116084312096, guid: 8e4f8a1ede1864877bdf59b86a5bffe1,
+        type: 2}
+      propertyPath: _data._json
+      value: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114296116084312096, guid: 8e4f8a1ede1864877bdf59b86a5bffe1,
+        type: 2}
+      propertyPath: _data._objectReferences.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: d7b16f55229544372be0524f70cc83ec,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8e4f8a1ede1864877bdf59b86a5bffe1, type: 2}
   m_IsPrefabParent: 0
@@ -432,6 +448,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 61422428}
     m_Modifications:
+    - target: {fileID: 114296116084312096, guid: 8e4f8a1ede1864877bdf59b86a5bffe1,
+        type: 2}
+      propertyPath: _data._objectReferences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224657369250251166, guid: 8e4f8a1ede1864877bdf59b86a5bffe1,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -551,6 +572,17 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0.6637437
       objectReference: {fileID: 0}
+    - target: {fileID: 114296116084312096, guid: 8e4f8a1ede1864877bdf59b86a5bffe1,
+        type: 2}
+      propertyPath: _data._json
+      value: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114296116084312096, guid: 8e4f8a1ede1864877bdf59b86a5bffe1,
+        type: 2}
+      propertyPath: _data._objectReferences.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: d7b16f55229544372be0524f70cc83ec,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8e4f8a1ede1864877bdf59b86a5bffe1, type: 2}
   m_IsPrefabParent: 0
@@ -820,6 +852,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 61422428}
     m_Modifications:
+    - target: {fileID: 114296116084312096, guid: 8e4f8a1ede1864877bdf59b86a5bffe1,
+        type: 2}
+      propertyPath: _data._objectReferences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224657369250251166, guid: 8e4f8a1ede1864877bdf59b86a5bffe1,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -928,6 +965,17 @@ Prefab:
       propertyPath: m_Name
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114296116084312096, guid: 8e4f8a1ede1864877bdf59b86a5bffe1,
+        type: 2}
+      propertyPath: _data._json
+      value: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114296116084312096, guid: 8e4f8a1ede1864877bdf59b86a5bffe1,
+        type: 2}
+      propertyPath: _data._objectReferences.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: d7b16f55229544372be0524f70cc83ec,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8e4f8a1ede1864877bdf59b86a5bffe1, type: 2}
   m_IsPrefabParent: 0

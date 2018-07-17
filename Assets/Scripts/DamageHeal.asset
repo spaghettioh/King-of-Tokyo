@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1893448595, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
+  m_Name: DamageHeal
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"graph":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[{"key":"Input","label":null,"summary":null,"hideLabel":false}],"controlOutputDefinitions":[{"key":"Output","label":null,"summary":null,"hideLabel":false}],"valueInputDefinitions":[{"hasDefaultValue":true,"defaultValue":{"$content":0,"$type":"System.Int32"},"_type":"System.Int32","key":"Damage","label":"","summary":"Damage
+      points to heal or take (-#)","hideLabel":false}],"valueOutputDefinitions":[],"title":null,"summary":null,"pan":{"x":403.4269,"y":170.1476},"zoom":1.0,"elements":[{"defaultValues":{},"position":{"x":811.0,"y":82.0},"guid":"dda85dd7-fe3f-466f-9fa3-f186a1e52a6f","$version":"A","$type":"Bolt.GraphOutput","$id":"12"},{"specifyFallback":false,"kind":"Object","defaultValues":{"name":{"$content":"Health","$type":"System.String"},"object":null},"position":{"x":115.0,"y":166.0},"guid":"207d0102-2976-463e-819f-5c3d31ea2d6b","$version":"A","$type":"Bolt.GetVariable","$id":"14"},{"defaultValues":{"b":{"$content":1.0,"$type":"System.Single"}},"position":{"x":324.0,"y":141.0},"guid":"04e1c2a5-6156-4edf-94d1-1b56136cc10e","$version":"A","$type":"Bolt.ScalarAdd","$id":"16"},{"defaultValues":{},"position":{"x":44.0,"y":-100.0},"guid":"16a1377d-d3c8-4ad3-b200-f8306993ed70","$version":"A","$type":"Bolt.GraphInput","$id":"18"},{"kind":"Object","defaultValues":{"name":{"$content":"Health","$type":"System.String"},"object":null},"position":{"x":578.0,"y":36.0},"guid":"b4a351c9-3b2d-45e8-8a69-3412d767d347","$version":"A","$type":"Bolt.SetVariable","$id":"20"},{"nest":{"source":"Macro","macro":0,"embed":null},"defaultValues":{},"position":{"x":-216.0,"y":50.0},"guid":"5f35e41d-2534-4722-897e-f015f8dd870f","$version":"A","$type":"Bolt.SuperUnit","$id":"22"},{"sourceUnit":{"$ref":"20"},"sourceKey":"assigned","destinationUnit":{"$ref":"12"},"destinationKey":"Output","guid":"19146492-1b03-4346-bab4-173fd2dcfa48","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"18"},"sourceKey":"Input","destinationUnit":{"$ref":"20"},"destinationKey":"assign","guid":"0f33249b-c047-4cc2-8925-ec0a5638a85a","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"18"},"sourceKey":"Damage","destinationUnit":{"$ref":"16"},"destinationKey":"b","guid":"1131cbf5-4a3f-46e3-a046-50fae2df6f85","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"16"},"sourceKey":"sum","destinationUnit":{"$ref":"20"},"destinationKey":"input","guid":"ac3fd7a8-dd31-4cd5-8fad-3846df091205","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"14"},"sourceKey":"value","destinationUnit":{"$ref":"16"},"destinationKey":"a","guid":"f90ecc1a-f02d-42c7-b2c5-77993daf7fd3","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"22"},"sourceKey":"player","destinationUnit":{"$ref":"20"},"destinationKey":"object","guid":"fffddc47-5868-46eb-9ccb-bb06fbd9590a","$type":"Bolt.ValueConnection"},{"sourceUnit":{"$ref":"22"},"sourceKey":"player","destinationUnit":{"$ref":"14"},"destinationKey":"object","guid":"1eceb15c-0869-4e1d-9527-aa9855944766","$type":"Bolt.ValueConnection"}],"$version":"A"}}'
+    _objectReferences:
+    - {fileID: 11400000, guid: 818e84c22fbd8d74c93a9496ae788b14, type: 2}
