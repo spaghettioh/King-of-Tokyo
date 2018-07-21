@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1893448595, guid: a040fb66244a7f54289914d98ea4ef7d, type: 3}
+  m_Name: CardFireBlast
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"graph":{"variables":{"collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":null,"summary":null,"pan":{"x":219.0,"y":-51.0},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-282.0,"y":-121.0},"guid":"3227a263-d026-4868-95b2-7b36f0a7ba83","$version":"A","$type":"Bolt.Start","$id":"9"},{"nest":{"source":"Macro","macro":0,"embed":null},"defaultValues":{"Points":{"$content":5,"$type":"System.Int32"}},"position":{"x":-71.0,"y":-120.0},"guid":"b0449b92-9cec-4613-8dc3-5891beea7911","$version":"A","$type":"Bolt.SuperUnit","$id":"11"},{"nest":{"source":"Macro","macro":1,"embed":null},"defaultValues":{"Damage":{"$content":4,"$type":"System.Int32"}},"position":{"x":211.0,"y":-120.0},"guid":"2c9a6326-2b1d-450b-b98e-189b770148ba","$version":"A","$type":"Bolt.SuperUnit","$id":"14"},{"sourceUnit":{"$ref":"9"},"sourceKey":"trigger","destinationUnit":{"$ref":"11"},"destinationKey":"Input","guid":"d5e93ec5-0616-46d0-8bbf-2bb891689b60","$type":"Bolt.ControlConnection"},{"sourceUnit":{"$ref":"11"},"sourceKey":"Output","destinationUnit":{"$ref":"14"},"destinationKey":"Input","guid":"e398c5de-0fe7-4c61-9a9f-f855ec514641","$type":"Bolt.ControlConnection"}],"$version":"A"}}'
+    _objectReferences:
+    - {fileID: 11400000, guid: 794bf5edb427949ebbd4003416e76031, type: 2}
+    - {fileID: 11400000, guid: c15dbaac7dcf2479a88ba48b0c47dc47, type: 2}

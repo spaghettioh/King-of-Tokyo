@@ -4,14 +4,16 @@
 /[Bb]uild/
 /[Bb]uilds/
 /Assets/AssetStoreTools*
-Ludiq*
-# !Ludiq/Bolt.Core/
-# Ludiq/Bolt.Core/*
-# !Ludiq/Bolt.Core/Generated/
-# Ludiq/Bolt.Core/Generated/*
-# !Ludiq/Bolt.Core/Generated/Variables/
-# Ludiq/Bolt.Core/Generated/Variables/*
-# !Ludiq/Bolt.Core/Generated/Variables/Resources/
+# Ludiq*
+# !Ludiq/
+/Assets/Ludiq/*
+!/Assets/Ludiq/Bolt.Core/
+/Assets/Ludiq/Bolt.Core/*
+!/Assets/Ludiq/Bolt.Core/Generated/
+/Assets/Ludiq/Bolt.Core/Generated/*
+!/Assets/Ludiq/Bolt.Core/Generated/Variables/
+/Assets/Ludiq/Bolt.Core/Generated/Variables/*
+!/Assets/Ludiq/Bolt.Core/Generated/Variables/Resources/
 
 
 # Visual Studio 2015 cache directory
