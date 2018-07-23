@@ -173,7 +173,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     _json: '{"declarations":{"collection":{"$content":[{"name":"Monster","value":{"$content":"Monster","$type":"System.String"},"$version":"A"},{"name":"Health","value":{"$content":10,"$type":"System.Int32"},"$version":"A"},{"name":"Energy","value":{"$content":0,"$type":"System.Int32"},"$version":"A"},{"name":"Victory
-      points","value":{"$content":0,"$type":"System.Int32"},"$version":"A"},{"name":"Dice","value":{"$content":6,"$type":"System.Int32"},"$version":"A"},{"name":"Player","value":{"$content":2,"$type":"System.Int32"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
+      points","value":{"$content":0,"$type":"System.Int32"},"$version":"A"},{"name":"Dice","value":{"$content":6,"$type":"System.Int32"},"$version":"A"},{"name":"Player","value":{"$content":2,"$type":"System.Int32"},"$version":"A"},{"name":"Roll
+      count","value":{"$content":3,"$type":"System.Int32"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
 --- !u!114 &114788767768973096
 MonoBehaviour:
